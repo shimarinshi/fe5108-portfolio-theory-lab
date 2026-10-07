@@ -23,9 +23,9 @@ All 30 original classes are represented; no submatrix or renormalization over on
 | Text: equal/inverse-similarity blend | 2026-10-06 | +11.47% | -8.39% |
 | Text: full matrix optimization | 2026-10-06 | +13.77% | -7.80% |
 
-![All comparisons](performance_comparison.png)
+![All comparisons](performance_comparison_30stocks.png)
 
-![Long-only detail](long_only_comparison.png)
+![Long-only detail](long_only_comparison_30stocks.png)
 
 ## Weights
 

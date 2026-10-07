@@ -35,7 +35,7 @@ m=pd.DataFrame(met).set_index('portfolio');m.to_csv(O/'performance.csv');con=pd.
 for name in w:con[name]=w[name]*con.stock_return;assert np.isclose(con[name].sum(),m.loc[name,'return'])
 con.to_csv(O/'contributions.csv')
 shown=['Text: full matrix optimization','Text: equal/inverse-similarity blend','Value weighted','Same 30 stocks, equal weight','Sample tangency','Ledoit-Wolf tangency','Nasdaq Composite ETF (ONEQ)','Nasdaq-100 ETF (QQQ)','Dow ETF (DIA)','S&P 500 ETF (SPY)','T-bill ETF proxy (SGOV)']
-for fname,zoom in [('performance_comparison.png',False),('long_only_comparison.png',True)]:
+for fname,zoom in [('performance_comparison_30stocks.png',False),('long_only_comparison_30stocks.png',True)]:
  fig,ax=plt.subplots(figsize=(13,8));colors=['#147553','#7a58a1','#c2883d','#777777','#cc5363','#467db7','#aaaa45','#d17e48','#966974','#8ca2ad','#444444']
  for name,c in zip(shown,colors):
   if zoom and name in ['Sample tangency','Ledoit-Wolf tangency']:continue
@@ -56,6 +56,6 @@ All 30 original classes are represented; no submatrix or renormalization over on
 ## Performance
 
 '''
-text+=table(['Portfolio','Through','Return','Max drawdown'],[[n,r.through,f'{r["return"]:+.2%}',f'{r.max_drawdown:.2%}'] for n,r in m.iterrows()]);text+='\n![All comparisons](performance_comparison.png)\n\n![Long-only detail](long_only_comparison.png)\n\n## Weights\n\n'+table(['Ticker']+list(w.columns),[[t]+[f'{v:.2%}' for v in row] for t,row in w.iterrows()])
+text+=table(['Portfolio','Through','Return','Max drawdown'],[[n,r.through,f'{r["return"]:+.2%}',f'{r.max_drawdown:.2%}'] for n,r in m.iterrows()]);text+='\n![All comparisons](performance_comparison_30stocks.png)\n\n![Long-only detail](long_only_comparison_30stocks.png)\n\n## Weights\n\n'+table(['Ticker']+list(w.columns),[[t]+[f'{v:.2%}' for v in row] for t,row in w.iterrows()])
 text+='\nSee [tracking accounting and limitations](../README.md). Retrospective universe/method choices, historical vendor cap uncertainty and excluded costs still apply. The same-basket comparison isolates weighting; it does not isolate classification skill. Run `python compare.py` with NumPy, pandas, SciPy and Matplotlib; all inputs are committed, no network required. Checks include convex optimum feasibility/KKT, weight sums, prior path replication and contribution reconciliation.\n'
 (O/'README.md').write_text(text);(O/'verification.json').write_text(json.dumps({'checks':'PASS: 30-class input match; feasible KKT optimum; unit weights; unchanged comparator paths; contributions','bandwidth':float(h),'stocks':30},indent=2));print(m.to_string())

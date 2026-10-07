@@ -115,10 +115,10 @@ def run():
     fig,ax=plt.subplots(figsize=(13,7))
     for i,label in enumerate(paths):ax.plot(paths.index,100*(paths[label]-1),label=label,color=colors[i],lw=2.5 if i<2 else 1.6,ls='--' if i in [2,7,8] else '-')
     ax.axhline(0,color='black',lw=.7);ax.grid(alpha=.18);ax.set_ylabel('Cumulative return (%)')
-    ax.set_title('Frozen 2025 portfolios: buy at Jan 2, 2026 open; hold through Oct 6 close',loc='left',pad=16)
+    ax.set_title('30 capitalization-selected stocks: Jan 2, 2026 open through Oct 6 close',loc='left',pad=16)
     ax.legend(loc='upper left',bbox_to_anchor=(1.01,1),frameon=False)
     fig.text(.07,.025,'Cash dividends included, not reinvested. Tangency excludes borrowing/trading costs and margin constraints. RF ends Aug 31.',fontsize=9)
-    fig.tight_layout(rect=(0,.05,1,1));fig.savefig(OUT/'2026_performance.png',dpi=190);plt.close(fig)
+    fig.tight_layout(rect=(0,.05,1,1));fig.savefig(OUT/'2026_performance_30stocks.png',dpi=190);plt.close(fig)
     def table(cols, rows):
         return '| '+' | '.join(cols)+' |\n| '+' | '.join(['---']*len(cols))+' |\n'+''.join('| '+' | '.join(map(str,r))+' |\n' for r in rows)
     report = """# 2026 tracking: updated 30-stock capitalization-selected universe
@@ -132,7 +132,7 @@ Entry is Jan 2, 2026 open; endpoint is Oct 6 close. Sample tangency and value we
 """
     report += table(['Portfolio','Through','Return','Max drawdown'],[[z.series,z.end_date,f'{z.total_return:+.2%}',f'{z.max_drawdown:.2%}'] for z in summary.itertuples()])
     report += """
-![Comparison](results/2026_performance.png)
+![Comparison](results/2026_performance_30stocks.png)
 
 [Ledoit–Wolf covariance comparison](ledoit_wolf/README.md) · [Text distance allocation comparisons](text_weight/README.md).
 

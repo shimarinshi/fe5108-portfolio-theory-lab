@@ -23,9 +23,9 @@ Same 108 monthly returns, unchanged excess-mean vector, Jan 2 open to Oct 6 clos
 | Sample tangency | 2026-10-06 | +40.78% | -23.70% |
 | Ledoit-Wolf tangency | 2026-10-06 | +31.30% | -16.83% |
 
-![Performance](performance_comparison.png)
+![Performance](performance_comparison_30stocks.png)
 
-![Weights](weight_comparison.png)
+![Weights](weight_comparison_30stocks.png)
 
 | Ticker | Sample tangency | Ledoit-Wolf tangency | Value weighted |
 | --- | --- | --- | --- |

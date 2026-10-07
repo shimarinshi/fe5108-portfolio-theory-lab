@@ -18,7 +18,7 @@ Entry is Jan 2, 2026 open; endpoint is Oct 6 close. Sample tangency and value we
 | T-bill ETF proxy (SGOV) | 2026-10-06 | +2.72% | 0.00% |
 | Official RF (through 2026-08-31) | 2026-08-31 | +2.31% | 0.00% |
 
-![Comparison](results/2026_performance.png)
+![Comparison](results/2026_performance_30stocks.png)
 
 [Ledoit–Wolf covariance comparison](ledoit_wolf/README.md) · [Text distance allocation comparisons](text_weight/README.md).
 

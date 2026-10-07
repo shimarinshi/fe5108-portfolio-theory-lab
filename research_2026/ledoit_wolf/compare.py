@@ -48,10 +48,10 @@ ax.axhline(0,color='#555',lw=.7);ax.yaxis.set_major_formatter(PercentFormatter(1
 fig.suptitle('2026 | Covariance shrinkage on the same frozen 30-stock portfolio',x=.08,ha='left',fontsize=16)
 fig.legend(*ax.get_legend_handles_labels(),loc='upper left',bbox_to_anchor=(.073,.93),ncol=2,frameon=False,fontsize=9)
 fig.text(.08,.025,'Jan 2 open – Oct 6 close. Fixed signed shares; cash dividends retained. Before borrow/financing fees, trading costs and taxes.\nOnly covariance estimator changes; same Jan 2017–Dec 2025 means and same 2024-text stock selection.',fontsize=9)
-fig.subplots_adjust(left=.08,right=.98,bottom=.14,top=.71);fig.savefig(O/'performance_comparison.png',dpi=170);plt.close(fig)
+fig.subplots_adjust(left=.08,right=.98,bottom=.14,top=.71);fig.savefig(O/'performance_comparison_30stocks.png',dpi=170);plt.close(fig)
 fig,ax=plt.subplots(figsize=(10,9));y=np.arange(30)
 for k,(name,color) in enumerate(zip(W.columns,['#ba4d58','#146c62','#2675b5'])):ax.barh(y+(k-1)*.25,W[name],height=.24,label=name,color=color)
-ax.set_yticks(y,W.index);ax.invert_yaxis();ax.xaxis.set_major_formatter(PercentFormatter(1));ax.axvline(0,color='#555',lw=.7);ax.legend();ax.set_title('Same inputs, sample versus Ledoit-Wolf covariance');fig.tight_layout();fig.savefig(O/'weight_comparison.png',dpi=160);plt.close(fig)
+ax.set_yticks(y,W.index);ax.invert_yaxis();ax.xaxis.set_major_formatter(PercentFormatter(1));ax.axvline(0,color='#555',lw=.7);ax.legend();ax.set_title('Same inputs, sample versus Ledoit-Wolf covariance');fig.tight_layout();fig.savefig(O/'weight_comparison_30stocks.png',dpi=160);plt.close(fig)
 def table(cols,rows):return '| '+' | '.join(cols)+' |\n| '+' | '.join(['---']*len(cols))+' |\n'+''.join('| '+' | '.join(map(str,row))+' |\n' for row in rows)
 text=f"""# Ledoit–Wolf: new 30-stock universe
 
@@ -60,7 +60,7 @@ Same 108 monthly returns, unchanged excess-mean vector, Jan 2 open to Oct 6 clos
 """
 text+=table(['Portfolio','Gross exposure','Min weight','Max weight'],[[n,f'{x.gross_exposure:.3f}x',f'{x.min_weight:.2%}',f'{x.max_weight:.2%}'] for n,x in diag.iterrows()])
 text+='\n## Performance\n\n'+table(['Portfolio','Through','Return','Max drawdown'],[[n,x.end_date,f'{x["return"]:+.2%}',f'{x.max_drawdown:.2%}'] for n,x in met.iterrows()])
-text+='\n![Performance](performance_comparison.png)\n\n![Weights](weight_comparison.png)\n\n'+table(['Ticker']+list(W.columns),[[t]+[f'{v:.2%}' for v in row] for t,row in W.iterrows()])
+text+='\n![Performance](performance_comparison_30stocks.png)\n\n![Weights](weight_comparison_30stocks.png)\n\n'+table(['Ticker']+list(W.columns),[[t]+[f'{v:.2%}' for v in row] for t,row in W.iterrows()])
 text+='\nThis is a retrospective covariance sensitivity, not a risk-matched or preregistered test. All stock corporate-action accounting and limitations are inherited from [the main tracking ledger](../README.md). Costs and financing are excluded. Run `python compare.py`; all weights, covariance, means, contributions, daily paths and checks are saved here. No network needed.\n'
 (O/'README.md').write_text(text)
 inputs=[P/'artifacts/monthly/monthly_total_returns.csv',P/'artifacts/monthly/risk_free_monthly.csv',P/'artifacts/stage1/portfolio_weights.csv',BASE/'results/individual_stock_wealth.csv',BASE/'results/wealth_paths.csv']
