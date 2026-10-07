@@ -7,7 +7,7 @@
 3. **Obtain and validate historical monthly market capitalization** for these specific securities. Define share-class versus issuer-level scope consistently. Do not substitute ETF position values, dollar trading volume or present-day market caps.
 4. **Compute Stage 1**: summary statistics, mean vector, covariance, unconstrained tangency weights and comparable value weights; repeat estimation on a subsample. Do not automatically trim extreme weights that are part of the estimation-error finding.
 
-Monthlyization and Stage 1 estimation are not yet executed by this checkpoint's `run_all.py`. Once implemented, extend that entry point rather than creating disconnected manual steps.
+Monthly total and excess returns have now been built and verified. Reproduce them with `python run_all.py --daily-root ./tbic_returns --monthly`. Stage 1 portfolio estimation remains outstanding.
 
 ## Value weights and timing
 
@@ -15,7 +15,7 @@ For a monthly value-weighted return series, set the weight for month `t` using *
 
 `w_i,t = cap_i,t-1 / sum_j(cap_j,t-1)`.
 
-Thus January 2017 requires **December 2016 month-end** capitalization. To compute January 2017-December 2025 returns, obtain at least December 2016-November 2025 lagged observations; include December 2025 too if showing end-sample weights. Do not use the same month's closing market cap as an ex-ante beginning-of-month weight.
+Thus January 2017 requires **December 2016 month-end** capitalization. If that initial capitalization is unavailable but January 2017 onward is valid, begin the lagged-cap comparison in February 2017 (107 months), as agreed, rather than inventing a starting value. Keep the full 108-month return table and align the final estimation/comparison sample explicitly. To compute January 2017-December 2025 returns, obtain at least December 2016-November 2025 lagged observations; include December 2025 too if showing end-sample weights. Do not use the same month's closing market cap as an ex-ante beginning-of-month weight.
 
 The Stage 1 weight chart needs one clearly specified comparison date or summary convention, because full-sample tangency weights are a single vector while monthly value weights vary. A full-sample estimated tangency vector is an in-sample descriptive object, not an ex-ante trading strategy. Specify and label the comparison before reporting it.
 

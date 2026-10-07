@@ -30,3 +30,7 @@ The committed comparison tables are **upstream measured results**, not new indep
 - Daily return conventions: TBIC's processed annual-security-return panels and retained data-quality notes.
 
 The source study was exploratory. Run IDs and hashes identify evidence; they do not certify point-in-time investability or correct unresolved source observations. Raw market files and prior local working copies are explicitly ignored by Git.
+
+## Authorized monthly market outputs
+
+`monthly/` now contains compounded monthly total returns, RF and excess returns explicitly approved for upload. This supersedes the initial market-data exclusion only for these monthly outputs; daily observations and raw provider responses remain local.

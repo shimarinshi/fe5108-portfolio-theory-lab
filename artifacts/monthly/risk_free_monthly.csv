@@ -1,0 +1,109 @@
+month,rf_monthly_percent,rf_monthly_decimal,rf_underlying_source
+2017-01,0.04,0.0004,Ibbotson Associates
+2017-02,0.04,0.0004,Ibbotson Associates
+2017-03,0.03,0.0003,Ibbotson Associates
+2017-04,0.05,0.0005,Ibbotson Associates
+2017-05,0.06,0.0006,Ibbotson Associates
+2017-06,0.06,0.0006,Ibbotson Associates
+2017-07,0.07,0.0007,Ibbotson Associates
+2017-08,0.09,0.0009,Ibbotson Associates
+2017-09,0.09,0.0009,Ibbotson Associates
+2017-10,0.09,0.0009,Ibbotson Associates
+2017-11,0.08,0.0008,Ibbotson Associates
+2017-12,0.09,0.0009,Ibbotson Associates
+2018-01,0.11,0.0011,Ibbotson Associates
+2018-02,0.11,0.0011,Ibbotson Associates
+2018-03,0.12,0.0012,Ibbotson Associates
+2018-04,0.14,0.0014,Ibbotson Associates
+2018-05,0.14,0.0014,Ibbotson Associates
+2018-06,0.14,0.0014,Ibbotson Associates
+2018-07,0.16,0.0016,Ibbotson Associates
+2018-08,0.16,0.0016,Ibbotson Associates
+2018-09,0.15,0.0015,Ibbotson Associates
+2018-10,0.19,0.0019,Ibbotson Associates
+2018-11,0.18,0.0018,Ibbotson Associates
+2018-12,0.19,0.0019,Ibbotson Associates
+2019-01,0.21,0.0021,Ibbotson Associates
+2019-02,0.18,0.0018,Ibbotson Associates
+2019-03,0.19,0.0019,Ibbotson Associates
+2019-04,0.21,0.0021,Ibbotson Associates
+2019-05,0.21,0.0021,Ibbotson Associates
+2019-06,0.18,0.0018,Ibbotson Associates
+2019-07,0.19,0.0019,Ibbotson Associates
+2019-08,0.16,0.0016,Ibbotson Associates
+2019-09,0.18,0.0018,Ibbotson Associates
+2019-10,0.15,0.0015,Ibbotson Associates
+2019-11,0.12,0.0012,Ibbotson Associates
+2019-12,0.14,0.0014,Ibbotson Associates
+2020-01,0.13,0.0013,Ibbotson Associates
+2020-02,0.12,0.0012,Ibbotson Associates
+2020-03,0.12,0.0012,Ibbotson Associates
+2020-04,0.0,0.0,Ibbotson Associates
+2020-05,0.01,0.0001,Ibbotson Associates
+2020-06,0.01,0.0001,Ibbotson Associates
+2020-07,0.01,0.0001,Ibbotson Associates
+2020-08,0.01,0.0001,Ibbotson Associates
+2020-09,0.01,0.0001,Ibbotson Associates
+2020-10,0.01,0.0001,Ibbotson Associates
+2020-11,0.01,0.0001,Ibbotson Associates
+2020-12,0.01,0.0001,Ibbotson Associates
+2021-01,0.0,0.0,Ibbotson Associates
+2021-02,0.0,0.0,Ibbotson Associates
+2021-03,0.0,0.0,Ibbotson Associates
+2021-04,0.0,0.0,Ibbotson Associates
+2021-05,0.0,0.0,Ibbotson Associates
+2021-06,0.0,0.0,Ibbotson Associates
+2021-07,0.0,0.0,Ibbotson Associates
+2021-08,0.0,0.0,Ibbotson Associates
+2021-09,0.0,0.0,Ibbotson Associates
+2021-10,0.0,0.0,Ibbotson Associates
+2021-11,0.0,0.0,Ibbotson Associates
+2021-12,0.01,0.0001,Ibbotson Associates
+2022-01,0.0,0.0,Ibbotson Associates
+2022-02,0.0,0.0,Ibbotson Associates
+2022-03,0.0,0.0,Ibbotson Associates
+2022-04,0.0,0.0,Ibbotson Associates
+2022-05,0.03,0.0003,Ibbotson Associates
+2022-06,0.06,0.0006,Ibbotson Associates
+2022-07,0.08,0.0008,Ibbotson Associates
+2022-08,0.19,0.0019,Ibbotson Associates
+2022-09,0.19,0.0019,Ibbotson Associates
+2022-10,0.23,0.0023,Ibbotson Associates
+2022-11,0.29,0.0029,Ibbotson Associates
+2022-12,0.33,0.0033,Ibbotson Associates
+2023-01,0.35,0.0034999999999999,Ibbotson Associates
+2023-02,0.34,0.0034,Ibbotson Associates
+2023-03,0.36,0.0036,Ibbotson Associates
+2023-04,0.35,0.0034999999999999,Ibbotson Associates
+2023-05,0.36,0.0036,Ibbotson Associates
+2023-06,0.4,0.004,Ibbotson Associates
+2023-07,0.45,0.0045,Ibbotson Associates
+2023-08,0.45,0.0045,Ibbotson Associates
+2023-09,0.43,0.0043,Ibbotson Associates
+2023-10,0.47,0.0046999999999999,Ibbotson Associates
+2023-11,0.44,0.0044,Ibbotson Associates
+2023-12,0.43,0.0043,Ibbotson Associates
+2024-01,0.47,0.0046999999999999,Ibbotson Associates
+2024-02,0.42,0.0042,Ibbotson Associates
+2024-03,0.43,0.0043,Ibbotson Associates
+2024-04,0.47,0.0046999999999999,Ibbotson Associates
+2024-05,0.44,0.0044,Ibbotson Associates
+2024-06,0.41,0.0040999999999999,ICE BofA US 1-Month Treasury Bill Index
+2024-07,0.45,0.0045,ICE BofA US 1-Month Treasury Bill Index
+2024-08,0.48,0.0048,ICE BofA US 1-Month Treasury Bill Index
+2024-09,0.4,0.004,ICE BofA US 1-Month Treasury Bill Index
+2024-10,0.39,0.0039,ICE BofA US 1-Month Treasury Bill Index
+2024-11,0.4,0.004,ICE BofA US 1-Month Treasury Bill Index
+2024-12,0.37,0.0037,ICE BofA US 1-Month Treasury Bill Index
+2025-01,0.37,0.0037,ICE BofA US 1-Month Treasury Bill Index
+2025-02,0.33,0.0033,ICE BofA US 1-Month Treasury Bill Index
+2025-03,0.34,0.0034,ICE BofA US 1-Month Treasury Bill Index
+2025-04,0.35,0.0034999999999999,ICE BofA US 1-Month Treasury Bill Index
+2025-05,0.38,0.0038,ICE BofA US 1-Month Treasury Bill Index
+2025-06,0.34,0.0034,ICE BofA US 1-Month Treasury Bill Index
+2025-07,0.34,0.0034,ICE BofA US 1-Month Treasury Bill Index
+2025-08,0.38,0.0038,ICE BofA US 1-Month Treasury Bill Index
+2025-09,0.33,0.0033,ICE BofA US 1-Month Treasury Bill Index
+2025-10,0.37,0.0037,ICE BofA US 1-Month Treasury Bill Index
+2025-11,0.3,0.003,ICE BofA US 1-Month Treasury Bill Index
+2025-12,0.34,0.0034,ICE BofA US 1-Month Treasury Bill Index

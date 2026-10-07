@@ -38,9 +38,9 @@ Read [method comparisons and all three figures](docs/02-classification-evidence.
 
 ## Data remain local
 
-**No daily prices, daily returns, raw SEC text, API responses, credentials, downloaded RF observations or market-cap series are committed.** Only research classification artifacts, compressed text vectors, filing metadata, coverage counts, comparison aggregates and selected-universe outputs are versioned.
+**No daily prices, daily returns, raw SEC text, API responses, credentials, market-cap series are committed.** Research classification artifacts, compressed text vectors, filing metadata, coverage counts, comparison aggregates, selected-universe outputs and the explicitly authorized monthly stock/RF return tables are versioned.
 
-The supplied daily panel spans **2016-09-30 to 2025-12-31**, with its first finite return on **2016-10-03**. The project uses the nine full years **2017-2025**. Monthly risk-free returns are already available locally; usable historical market capitalizations are still outstanding.
+The supplied daily panel spans **2016-09-30 to 2025-12-31**, with its first finite return on **2016-10-03**. The project uses the nine full years **2017-2025**. Monthly total and excess returns for the 24 stocks are now published in `artifacts/monthly/`, alongside the aligned RF series. Usable historical market capitalizations are still outstanding.
 
 See [data sources and processing](docs/01-data.md) and [artifact provenance and reproduction boundaries](artifacts/README.md).
 
@@ -83,3 +83,9 @@ The optional local replay checks every one of the 1,910 candidate companies. It 
 Upstream data and text-classification research: TBIC / Tuoyuan, with specific run IDs and hashes recorded in [provenance](artifacts/inputs/provenance.json). Market data: Massive; filings: SEC EDGAR; historical universe proxy: iShares IWV holdings; standard benchmark: SEC SIC mapped to Fama-French 48 industries; risk-free series: Kenneth French Data Library.
 
 AI assistance: OpenAI Codex assisted with data auditing, reproducible selection code, evidence visualization and documentation. The team remains responsible for all results and interpretations. This repository is a research checkpoint, not an investment recommendation.
+
+## Monthly return tables
+
+[Monthly total returns](artifacts/monthly/monthly_total_returns.csv) and [monthly excess returns](artifacts/monthly/monthly_excess_returns.csv) each contain 108 months by 24 stocks (January 2017-December 2025), in decimals. [Long-form observations](artifacts/monthly/monthly_returns_long.csv) retain security IDs and coverage counts; [RF](artifacts/monthly/risk_free_monthly.csv) is aligned to the same months. See the [monthly README](artifacts/monthly/README.md).
+
+Rebuild from the local daily files with `python scripts/monthly.py --daily-root ./tbic_returns`, or reproduce both checkpoints with `python run_all.py --daily-root ./tbic_returns --monthly`. Daily market observations remain excluded from Git.

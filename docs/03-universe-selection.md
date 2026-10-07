@@ -70,7 +70,7 @@ The excluded WTI class mixed 29 energy and 14 healthcare companies. Removing WTI
 
 Textual typicality is not return typicality, low risk, investment attractiveness or independence of risk factors. We still need monthly covariance diagnostics for the chosen stocks. The historical complete-data restriction biases the sample toward securities with persistent usable coverage; missing dates can reflect panel membership or identity gaps as well as listing dates and exits.
 
-No monthly returns, tangency weights or CAPM results have been estimated at this checkpoint. The next step is the [monthly-input workflow](04-next-steps.md).
+Monthly total and excess returns are now available for the frozen universe. Tangency weights and CAPM results have not yet been estimated. Follow the [monthly-input workflow](04-next-steps.md) for the remaining capitalization input.
 
 ## Reproduction
 

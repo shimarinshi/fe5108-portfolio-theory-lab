@@ -1,0 +1,54 @@
+{
+  "window": [
+    "2017-01",
+    "2025-12"
+  ],
+  "assets": 24,
+  "months": 108,
+  "asset_months": 2592,
+  "missing_values": 0,
+  "daily_rows_used": 54288,
+  "formula": "product(1 + daily total return) - 1",
+  "max_terminal_compounding_error": 1.554312234475219e-14,
+  "daily_sources": [
+    {
+      "file": "data/annual_security_returns/formation_date=2016-12-30/cohort=iwv-sec-2016/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "73f463c12500b0f7c6b2df09b59412b66604ee395e62dd14f9e1d58ce76d833b"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2017-12-29/cohort=iwv-sec-2017/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "6a9cdcbb8ca722d8c3372d4771e798f5c1a14d92daf91485c24a4156685e0b61"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2018-12-31/cohort=iwv-sec-2018/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "46a960e1d1403430de24e430573eeb71be4d4b25e4c7b4257dec343588f7fd5f"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2019-12-31/cohort=iwv-sec-2019/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "9d1d378b0af1e41a724e6433ea789c44c973b00ba771ad910262f1d5df30bdd5"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2020-12-31/cohort=iwv-sec-2020/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "508d086ff0cd047c81f094dc1e28509445b9d5e34406cfd78ea41220bfa41d51"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2021-12-31/cohort=iwv-sec-2021/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "26595f137675e2a26c170e5463c2bdef55532b3a2d73ab6e0f5304a513b148b8"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2022-12-30/cohort=iwv-sec-2022/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "62e76d4362224e6518cd03d4fd9163c513bfc0eff849cb6b2e73ba881227d8ea"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2023-12-29/cohort=iwv-sec-2023/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "3b2d572c12e8099c79d782b0b053d913bfe773f204325e2491b976a274d9e2d7"
+    },
+    {
+      "file": "data/annual_security_returns/formation_date=2024-12-31/cohort=iwv-sec-2024/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
+      "sha256": "be16925e9fb421a8252c67dea0a5e17958a4292938dfee5a4f62baf4cfad840d"
+    }
+  ],
+  "rf_source_sha256": "409470a23435594be4a4dd4a9d6b340b889a67998a1cf8c2210bf1fb7a258678",
+  "selected_universe_sha256": "7575c0b514ed49bb8a55367c3537ccafb00e18f16b065a7ce2297159741e984f",
+  "market_cap_weights": "Not computed. A later lagged-cap analysis may start one month later if the initial cap is unavailable."
+}
