@@ -2,7 +2,7 @@
 
 **FE5108 group project: from portfolio choice to CAPM, factor models and investment judgment.**
 
-This repository covers the **whole project**, not only Stage 1. The current checkpoint establishes the data specification, the evidence for text-based universe construction, and a frozen universe of **24 US stocks**. Portfolio estimates, CAPM regressions, factor models and the final memo are the next stages; they have not been completed here.
+This repository covers the **whole project**, not only Stage 1. The current checkpoint establishes the data specification, the evidence for text-based universe construction, and a frozen universe of **24 US stocks**. Stage 1 now includes estimated moments, static portfolio weights and subsample comparisons. CAPM regressions, factor models and the final memo remain to be completed.
 
 ## Research design
 
@@ -38,9 +38,9 @@ Read [method comparisons and all three figures](docs/02-classification-evidence.
 
 ## Data remain local
 
-**No daily prices, daily returns, raw SEC text, API responses, credentials, market-cap series are committed.** Research classification artifacts, compressed text vectors, filing metadata, coverage counts, comparison aggregates, selected-universe outputs and the explicitly authorized monthly stock/RF return tables are versioned.
+**No daily prices, daily returns, raw SEC text, credentials or full historical market-cap series are committed.** The authorized December 31, 2025 market-cap snapshot and its sanitized detail responses are included for reproducibility. Research classification artifacts, compressed text vectors, filing metadata, coverage counts, comparison aggregates, selected-universe outputs and the explicitly authorized monthly stock/RF return tables are versioned.
 
-The supplied daily panel spans **2016-09-30 to 2025-12-31**, with its first finite return on **2016-10-03**. The project uses the nine full years **2017-2025**. Monthly total and excess returns for the 24 stocks are now published in `artifacts/monthly/`, alongside the aligned RF series. Usable historical market capitalizations are still outstanding.
+The supplied daily panel spans **2016-09-30 to 2025-12-31**, with its first finite return on **2016-10-03**. The project uses the nine full years **2017-2025**. Monthly total and excess returns for the 24 stocks are now published in `artifacts/monthly/`, alongside the aligned RF series. Stage 1 uses the single December 31, 2025 capitalization snapshot, with audit limitations documented.
 
 See [data sources and processing](docs/01-data.md) and [artifact provenance and reproduction boundaries](artifacts/README.md).
 
@@ -89,3 +89,7 @@ AI assistance: OpenAI Codex assisted with data auditing, reproducible selection 
 [Monthly total returns](artifacts/monthly/monthly_total_returns.csv) and [monthly excess returns](artifacts/monthly/monthly_excess_returns.csv) each contain 108 months by 24 stocks (January 2017-December 2025), in decimals. [Long-form observations](artifacts/monthly/monthly_returns_long.csv) retain security IDs and coverage counts; [RF](artifacts/monthly/risk_free_monthly.csv) is aligned to the same months. See the [monthly README](artifacts/monthly/README.md).
 
 Rebuild from the local daily files with `python scripts/monthly.py --daily-root ./tbic_returns`, or reproduce both checkpoints with `python run_all.py --daily-root ./tbic_returns --monthly`. Daily market observations remain excluded from Git.
+
+## Stage 1 results
+
+[Read Stage 1: means, covariance matrices, separate weight tables and interpretation](artifacts/stage1/README.md). Run `python run_all.py --stage1` to reproduce. The three mean-vector CSVs and three 24-by-24 covariance CSVs are small enough to remain uncompressed.

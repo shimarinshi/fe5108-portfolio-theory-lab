@@ -1,0 +1,13 @@
+{
+  "assets": 24,
+  "months": 108,
+  "cutoff": "2025-12-31",
+  "missing_returns": 0,
+  "checks": "Positive definite covariance, linear-system residual, weights sum to one; complete aligned monthly inputs.",
+  "sources_sha256": {
+    "artifacts/input/year_end_market_cap_2025.csv": "37f6553ee88d2bbb028bc0f3d2b97ae02f579ad79dd6932e3d707b29aec72e71",
+    "artifacts/monthly/monthly_total_returns.csv": "3704de9ae81fcf1571933a5f2f9ca673654c9fca52b53a05b8fe75a98e95025f",
+    "artifacts/monthly/risk_free_monthly.csv": "ab249df8d9674566b66f7192fac803b8ac0d40aba00ad619b3dcc7745e69b054"
+  },
+  "note": "Static retrospective estimates; fitted Sharpe is not out-of-sample performance. Covariance uses total returns, sample ddof=1; mean excess subtracts mean monthly RF."
+}
