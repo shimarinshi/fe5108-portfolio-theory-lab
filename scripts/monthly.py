@@ -20,8 +20,8 @@ def digest(path):
 
 def build(daily_root):
     daily_root = Path(daily_root)
-    selected = pd.read_csv(ROOT/'artifacts/results/selected_universe_24.csv', dtype={'cik': str})
-    assert len(selected) == 24 and selected.security_id.is_unique
+    selected = pd.read_csv(ROOT/'artifacts/results/selected_universe.csv', dtype={'cik': str})
+    assert len(selected) == 30 and selected.security_id.is_unique
     paths = sorted(daily_root.glob('data/**/returns.parquet'))
     if len(paths) != 9:
         raise ValueError('Expected nine annual daily panels.')
@@ -51,7 +51,7 @@ def build(daily_root):
                      'total_return': compound(group['return'])})
     monthly = pd.DataFrame(rows).merge(selected[['security_id','ticker','cik']], on='security_id', validate='many_to_one')
     months = pd.period_range('2017-01','2025-12',freq='M').astype(str).tolist()
-    assert len(monthly) == 108 * 24 and set(monthly.month) == set(months)
+    assert len(monthly) == 108 * len(selected) and set(monthly.month) == set(months)
     assert monthly.groupby('security_id').size().eq(108).all()
     rf_path = daily_root/'supplements_monthly/risk_free_monthly.csv'
     rf = pd.read_csv(rf_path)
@@ -73,11 +73,11 @@ def build(daily_root):
     wide.to_csv(OUT/'monthly_total_returns.csv')
     excess.to_csv(OUT/'monthly_excess_returns.csv')
     rf[rf.month.isin(months)].sort_values('month').to_csv(OUT/'risk_free_monthly.csv',index=False)
-    report={'window':['2017-01','2025-12'],'assets':24,'months':108,'asset_months':2592,
+    report={'window':['2017-01','2025-12'],'assets':len(selected),'months':108,'asset_months':108*len(selected),
             'missing_values':0,'daily_rows_used':len(daily),'formula':'product(1 + daily total return) - 1',
             'max_terminal_compounding_error':max(errors),'daily_sources':sources,
-            'rf_source_sha256':digest(rf_path),'selected_universe_sha256':digest(ROOT/'artifacts/results/selected_universe_24.csv'),
-            'market_cap_weights':'Not computed. A later lagged-cap analysis may start one month later if the initial cap is unavailable.'}
+            'rf_source_sha256':digest(rf_path),'selected_universe_sha256':digest(ROOT/'artifacts/results/selected_universe.csv'),
+            'market_cap_weights':'Stage 1 uses a static 2025-12-31 market-cap snapshot.'}
     (OUT/'verification.json').write_text(json.dumps(report,indent=2)+'\n')
     print(f'Built {wide.shape[0]} months x {wide.shape[1]} assets; no missing values; terminal compounding check passed.')
 

@@ -3,13 +3,13 @@
     "2017-01",
     "2025-12"
   ],
-  "assets": 24,
+  "assets": 30,
   "months": 108,
-  "asset_months": 2592,
+  "asset_months": 3240,
   "missing_values": 0,
-  "daily_rows_used": 54288,
+  "daily_rows_used": 67860,
   "formula": "product(1 + daily total return) - 1",
-  "max_terminal_compounding_error": 1.554312234475219e-14,
+  "max_terminal_compounding_error": 2.842170943040401e-14,
   "daily_sources": [
     {
       "file": "data/annual_security_returns/formation_date=2016-12-30/cohort=iwv-sec-2016/identity=iwv-reviewed-continuity/terminal_events=reviewed-2025-cash-stock-exits/returns.parquet",
@@ -49,6 +49,6 @@
     }
   ],
   "rf_source_sha256": "409470a23435594be4a4dd4a9d6b340b889a67998a1cf8c2210bf1fb7a258678",
-  "selected_universe_sha256": "7575c0b514ed49bb8a55367c3537ccafb00e18f16b065a7ce2297159741e984f",
-  "market_cap_weights": "Not computed. A later lagged-cap analysis may start one month later if the initial cap is unavailable."
+  "selected_universe_sha256": "cf127523a83ac56dafbb5d1c91133c2bd464dabd673f38d99d18a4de4ff90dd3",
+  "market_cap_weights": "Stage 1 uses a static 2025-12-31 market-cap snapshot."
 }
