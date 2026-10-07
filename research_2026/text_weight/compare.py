@@ -1,4 +1,4 @@
-"""Two text weighting rules on the same new 30-stock main universe; offline."""
+"""Two text weighting rules on the same 30-stock main universe; offline."""
 from pathlib import Path
 import json,hashlib
 import numpy as np,pandas as pd
@@ -45,13 +45,13 @@ for fname,zoom in [('performance_comparison_30stocks.png',False),('long_only_com
  fig.text(.08,.025,'Jan 2 open – Oct 6 close. Same split-aware stock ledger and cash dividends for every allocation.\nRetrospective comparison; no financing, borrowing, trading costs or taxes. Benchmark data unchanged.',fontsize=9)
  fig.subplots_adjust(left=.08,right=.98,bottom=.14,top=.67);fig.savefig(O/fname,dpi=160);plt.close(fig)
 def table(cols,rows):return '| '+' | '.join(cols)+' |\n| '+' | '.join(['---']*len(cols))+' |\n'+''.join('| '+' | '.join(map(str,r))+' |\n' for r in rows)
-text='''# Text allocations on the new 30-stock basket
+text='''# Text allocations on the 30-stock basket
 
-Same stocks as main: largest end-2024 company cap among members with 108 complete monthly returns in each class. Recompute full-class centroids from normalized original 50D vectors (not UMAP display coordinates). One selected representative receives the entire class budget. No within-class softmax or new pruning.
+Same stocks as main: largest end-2024 company cap among members with 108 complete monthly returns in each class. Recompute full-class centroids from normalized original 50D vectors (not UMAP display coordinates). One selected representative receives the entire class budget. Each class has one representative; no within-class softmax or weight pruning is applied.
 
-Let D be pairwise cosine distance, h its off-diagonal median, and S=exp(-D/h), including diagonal 1. The earlier text rule is 0.5/K + 0.5*(1/row_sum(S))/sum(1/row_sum(S)). The full-matrix rule minimizes w^T S w with sum(w)=1 and 0.25/K <= w_i <= 2/K. K=30; bounds are 0.8333% and 6.6667%. They are explicit constraints, not return-tuned parameters. This similarity-sensitive diversity objective does not estimate return covariance or prove risk reduction.
+Let D be pairwise cosine distance, h its off-diagonal median, and S=exp(-D/h), including diagonal 1. The equal/inverse-similarity blend is 0.5/K + 0.5*(1/row_sum(S))/sum(1/row_sum(S)). The full-matrix rule minimizes w^T S w with sum(w)=1 and 0.25/K <= w_i <= 2/K. K=30; bounds are 0.8333% and 6.6667%. They are explicit constraints, not return-tuned parameters. This similarity-sensitive diversity objective does not estimate return covariance or prove risk reduction.
 
-All 30 original classes are represented; no submatrix or renormalization over only 24 classes remains. Both text allocations and the three financial allocations share the same 2026 split-aware economic paths.
+All 30 classes are represented, and both text weighting rules use the full 30-class similarity matrix. Both text allocations and the three financial allocations share the same 2026 split-aware economic paths.
 
 ## Performance
 

@@ -53,7 +53,7 @@ fig,ax=plt.subplots(figsize=(10,9));y=np.arange(30)
 for k,(name,color) in enumerate(zip(W.columns,['#ba4d58','#146c62','#2675b5'])):ax.barh(y+(k-1)*.25,W[name],height=.24,label=name,color=color)
 ax.set_yticks(y,W.index);ax.invert_yaxis();ax.xaxis.set_major_formatter(PercentFormatter(1));ax.axvline(0,color='#555',lw=.7);ax.legend();ax.set_title('Same inputs, sample versus Ledoit-Wolf covariance');fig.tight_layout();fig.savefig(O/'weight_comparison_30stocks.png',dpi=160);plt.close(fig)
 def table(cols,rows):return '| '+' | '.join(cols)+' |\n| '+' | '.join(['---']*len(cols))+' |\n'+''.join('| '+' | '.join(map(str,row))+' |\n' for row in rows)
-text=f"""# Ledoit–Wolf: new 30-stock universe
+text=f"""# Ledoit–Wolf: 30-stock universe
 
 Same 108 monthly returns, unchanged excess-mean vector, Jan 2 open to Oct 6 close. Only covariance estimation changes relative to sample tangency. Scikit-learn scaled-identity shrinkage: Sigma=(1-alpha) S_MLE+alpha trace(S_MLE)/N I. Estimated alpha={fit.shrinkage_:.6f}. Weights normalize solve(Sigma,mean_excess); no clipping, mean shrinkage or leverage cap. Uniform covariance divisor scaling cancels in normalized weights.
 

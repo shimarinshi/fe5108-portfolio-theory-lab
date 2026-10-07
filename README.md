@@ -2,7 +2,7 @@
 
 **FE5108 group project: portfolio choice, CAPM, factor models and investment judgment.**
 
-The main project now uses **30 US stocks**, one per end-2024 text class, selected by **largest December 31, 2024 company market capitalization among members with 108 complete monthly return observations**. This replaces centrality-based stock selection. Stage 1 has been rebuilt with the new universe, monthly data, mean vectors, covariance matrices, weights and separate subsample tables.
+The project uses **30 US stocks**, one per end-2024 text class, selected by **largest December 31, 2024 company market capitalization among members with 108 complete monthly return observations**. Stage 1 includes monthly data, mean vectors, covariance matrices, weights and separate subsample tables for this universe.
 
 ## Research design
 
@@ -73,4 +73,4 @@ Upstream text and return research: TBIC / Tuoyuan. Market data: Massive; filings
 
 ## Research branch: 2026 tracking
 
-This branch extends the main 30-stock project with [2026 tracking](research_2026/README.md), [Ledoit–Wolf sensitivity](research_2026/ledoit_wolf/README.md) and [text allocation comparisons](research_2026/text_weight/README.md). All use the same new capitalization-selected basket. Old 24-stock experiments are available in Git history.
+This branch extends the main 30-stock project with [2026 tracking](research_2026/README.md), [Ledoit–Wolf sensitivity](research_2026/ledoit_wolf/README.md) and [text allocation comparisons](research_2026/text_weight/README.md). All use the same capitalization-selected basket.

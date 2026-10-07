@@ -1,4 +1,4 @@
-# Ledoit–Wolf: new 30-stock universe
+# Ledoit–Wolf: 30-stock universe
 
 Same 108 monthly returns, unchanged excess-mean vector, Jan 2 open to Oct 6 close. Only covariance estimation changes relative to sample tangency. Scikit-learn scaled-identity shrinkage: Sigma=(1-alpha) S_MLE+alpha trace(S_MLE)/N I. Estimated alpha=0.129048. Weights normalize solve(Sigma,mean_excess); no clipping, mean shrinkage or leverage cap. Uniform covariance divisor scaling cancels in normalized weights.
 

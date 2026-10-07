@@ -15,4 +15,4 @@ RF source: [Kenneth French Data Library](https://mba.tuck.dartmouth.edu/pages/fa
 Reproduction: `python scripts/monthly.py --daily-root ./tbic_returns`. The raw files must be supplied locally. `python run_all.py --daily-root ./tbic_returns --monthly` reproduces the selection and monthly checkpoints together.
 
 
-Stage 1 uses one static December 31, 2025 capitalization snapshot. All 30 columns were rebuilt from original daily panels after the capitalization-selection change.
+Stage 1 uses one static December 31, 2025 capitalization snapshot. All 30 columns are compounded from the original daily panels.

@@ -1,10 +1,10 @@
-# Text allocations on the new 30-stock basket
+# Text allocations on the 30-stock basket
 
-Same stocks as main: largest end-2024 company cap among members with 108 complete monthly returns in each class. Recompute full-class centroids from normalized original 50D vectors (not UMAP display coordinates). One selected representative receives the entire class budget. No within-class softmax or new pruning.
+Same stocks as main: largest end-2024 company cap among members with 108 complete monthly returns in each class. Recompute full-class centroids from normalized original 50D vectors (not UMAP display coordinates). One selected representative receives the entire class budget. Each class has one representative; no within-class softmax or weight pruning is applied.
 
-Let D be pairwise cosine distance, h its off-diagonal median, and S=exp(-D/h), including diagonal 1. The earlier text rule is 0.5/K + 0.5*(1/row_sum(S))/sum(1/row_sum(S)). The full-matrix rule minimizes w^T S w with sum(w)=1 and 0.25/K <= w_i <= 2/K. K=30; bounds are 0.8333% and 6.6667%. They are explicit constraints, not return-tuned parameters. This similarity-sensitive diversity objective does not estimate return covariance or prove risk reduction.
+Let D be pairwise cosine distance, h its off-diagonal median, and S=exp(-D/h), including diagonal 1. The equal/inverse-similarity blend is 0.5/K + 0.5*(1/row_sum(S))/sum(1/row_sum(S)). The full-matrix rule minimizes w^T S w with sum(w)=1 and 0.25/K <= w_i <= 2/K. K=30; bounds are 0.8333% and 6.6667%. They are explicit constraints, not return-tuned parameters. This similarity-sensitive diversity objective does not estimate return covariance or prove risk reduction.
 
-All 30 original classes are represented; no submatrix or renormalization over only 24 classes remains. Both text allocations and the three financial allocations share the same 2026 split-aware economic paths.
+All 30 classes are represented, and both text weighting rules use the full 30-class similarity matrix. Both text allocations and the three financial allocations share the same 2026 split-aware economic paths.
 
 ## Performance
 

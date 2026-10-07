@@ -1,4 +1,4 @@
-"""Cache-first new-universe Massive receipts, with Singapore egress verification."""
+"""Cache-first Massive receipts for the selected universe, with Singapore egress verification."""
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import json,time,threading

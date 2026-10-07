@@ -49,4 +49,4 @@ Historical ticker-overview queries are issuer-identity matched, but vendor share
 
 ## Reproduction
 
-`python run_all.py` recreates all rankings and selections. `artifacts/inputs/formation_market_caps_2024.csv` supplies the complete 1,910-member cap table; its hash is in provenance. `artifacts/results/selected_universe.csv` is the canonical selection artifact, independent of asset-count naming. `candidates_30.csv` contains the same retained class representatives. Original centrality-universe results remain recoverable in Git history.
+`python run_all.py` recreates all rankings and selections. `artifacts/inputs/formation_market_caps_2024.csv` supplies the complete 1,910-member cap table; its hash is in provenance. `artifacts/results/selected_universe.csv` is the canonical selection artifact, independent of asset-count naming. `candidates_30.csv` contains the same retained class representatives.

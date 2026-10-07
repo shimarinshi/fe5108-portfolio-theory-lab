@@ -1,8 +1,8 @@
-# 2026 tracking: updated 30-stock capitalization-selected universe
+# 2026 tracking: 30-stock capitalization-selected universe
 
-The universe now matches main: one largest end-2024 company by vendor market cap among members with 108 complete monthly returns in each text class. Seven classes substitute the largest complete-history member. See [selection](../docs/03-universe-selection.md). The previous 24-stock experiment remains in Git history; its results must not be mixed with this version.
+The universe consists of 30 stocks: one largest end-2024 company by vendor market cap among members with 108 complete monthly returns in each text class. Seven classes substitute the largest complete-history member. See [selection](../docs/03-universe-selection.md).
 
-Entry is Jan 2, 2026 open; endpoint is Oct 6 close. Sample tangency and value weights are the new Stage 1 weights, estimated through Dec 2025. This does not introduce 2026 returns into that estimation, but selection/method choices were made retrospectively in October 2026.
+Entry is Jan 2, 2026 open; endpoint is Oct 6 close. Sample tangency and value weights are the Stage 1 weights, estimated through Dec 2025. This does not introduce 2026 returns into that estimation, but selection/method choices were made retrospectively in October 2026.
 
 ## Performance
 

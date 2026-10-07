@@ -37,4 +37,4 @@ The source study was exploratory. Run IDs and hashes identify evidence; they do 
 
 ## Capitalization inputs
 
-`inputs/formation_market_caps_2024.csv` contains all 1,910 identity-matched formation caps used to rank candidates. `input/year_end_market_cap_2025.csv` and its sanitized detail receipts cover the 30 selected endpoint issuers used for Stage 1 value weights. The former selects stocks; the latter weights the fixed basket. Original centrality results remain in Git history.
+`inputs/formation_market_caps_2024.csv` contains all 1,910 identity-matched formation caps used to rank candidates. `input/year_end_market_cap_2025.csv` and its sanitized detail receipts cover the 30 selected endpoint issuers used for Stage 1 value weights. The former selects stocks; the latter weights the fixed basket.
