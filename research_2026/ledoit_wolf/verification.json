@@ -1,0 +1,12 @@
+{
+  "alpha": 0.1290484169762063,
+  "sklearn_version": "1.9.0",
+  "checks": "original weights/wealth reproduced; shrinkage identity; positive covariance; weights sum one; contributions reconcile",
+  "inputs": {
+    "artifacts/monthly/monthly_total_returns.csv": "60a949c17a05a43f10f9046dbee5b00f1cd61f4e7504e4e61c9ab83792c57b6a",
+    "artifacts/monthly/risk_free_monthly.csv": "ab249df8d9674566b66f7192fac803b8ac0d40aba00ad619b3dcc7745e69b054",
+    "artifacts/stage1/portfolio_weights.csv": "4ff22cfc460b31a8a03065bcff281d3533dd003aede6e74267b78055eab39859",
+    "research_2026/results/individual_stock_wealth.csv": "4fa8afe268c892b912d5e77885f71e4f57647550eff97ef4aa7fe4fe85af5cb0",
+    "research_2026/results/wealth_paths.csv": "e719a39f26b6f121887e696b0ff4ef81c754dac9ca72e52d5d630620adafdab3"
+  }
+}

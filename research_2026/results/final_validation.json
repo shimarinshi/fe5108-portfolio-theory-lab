@@ -1,0 +1,6 @@
+{
+  "stocks": 30,
+  "sessions": 191,
+  "checks": "PASS: identity sets, signed wealth reconstruction, cash monotonicity, all weight sums and portfolio paths; stock corporate actions explicitly accounted",
+  "max_cross_vendor_normalized_price_difference": 0.0004958021496571652
+}

@@ -1,0 +1,5 @@
+{
+  "checks": "PASS: 30-class input match; feasible KKT optimum; unit weights; unchanged comparator paths; contributions",
+  "bandwidth": 0.1969938879791041,
+  "stocks": 30
+}

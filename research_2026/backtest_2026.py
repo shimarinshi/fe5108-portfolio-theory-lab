@@ -37,39 +37,39 @@ def run():
     dates=yahoo('SPY').index
     assert dates[0]==START and dates[-1]==END
     legs={};entries={};cashflows={};data=[]
-    maps={t:cap.loc[t,'source_ticker'] for t in weights.index};maps.update(RYI='RYZ',HLX='HOS')
+    maps={t:cap.loc[t,'source_ticker'] for t in weights.index}
+    actions=[]
+    def results(symbol,kind):
+        rec=json.loads((CACHE/f'massive_{symbol}_{kind}.json').read_text())
+        return [x for page in rec['pages'] for x in page.get('results',[])]
     for ticker in weights.index:
-        if ticker=='CSGS':
-            raw=json.loads((CACHE/'CSGS_prices.json').read_text())['body']
-            assert not raw.get('next_url')
-            b=pd.DataFrame(raw['results'])
-            b.index=pd.to_datetime(b.t,unit='ms',utc=True).dt.tz_convert('America/New_York').dt.strftime('%Y-%m-%d')
-            b=b.rename(columns={'o':'open','c':'close'})[['open','close']]
-            assert b.index[0]==START and b.index[-1]=='2026-05-13'
-            before=dates[dates<'2026-05-14'];assert list(b.index)==list(before)
-            price=b.close.reindex(dates)
-            # Documented mandatory $80.70 settlement: cash receivable, not a stale price fill.
-            price.loc['2026-05-14':]=80.70
-            div=pd.Series(0.,index=dates)
-            dr=json.loads((CACHE/'CSGS_dividends.json').read_text())['body'];assert not dr.get('next_url')
-            for event in dr['results']:
-                if START<event['ex_dividend_date']<'2026-05-14':div.loc[event['ex_dividend_date']]+=event['cash_amount']
-            entry=b.loc[START,'open']
-        else:
-            b=yahoo(maps[ticker]);assert list(b.index)==list(dates), ticker
-            price=b.close;div=b.dividend;entry=b.loc[START,'open']
-        assert entry>0 and price.notna().all()
-        # Fixed signed shares: dividends are accrued cash (short positions owe them).
-        legs[ticker]=(price+div.cumsum())/entry
-        cashflows[ticker]=div.cumsum()/entry;entries[ticker]=entry
-        data.append(pd.DataFrame({'date':dates,'formation_ticker':ticker,'source_symbol':maps[ticker],
-            'price_or_cash_settlement':price.values,'cumulative_dividend_receivable_per_share':div.cumsum().values,'entry_open':entry,
-            'position_type':['cash_settlement' if ticker=='CSGS' and dt>='2026-05-14' else 'equity' for dt in dates]}))
+        symbol=maps[ticker];bars=pd.DataFrame(results(symbol,'prices'))
+        bars.index=pd.to_datetime(bars.t,unit='ms',utc=True).dt.tz_convert('America/New_York').dt.strftime('%Y-%m-%d')
+        assert list(bars.index)==list(dates),ticker
+        entry=float(bars.loc[START,'o']);assert entry>0
+        splits={};divs={}
+        for e in results(symbol,'splits'):
+            dt=e['execution_date'];factor=e['split_to']/e['split_from'];splits[dt]=splits.get(dt,1)*factor
+            actions.append({'ticker':ticker,'date':dt,'type':'split_or_stock_distribution','factor_or_cash':factor})
+        for e in results(symbol,'dividends'):
+            dt=e['ex_dividend_date']
+            if START<dt<=END:
+                assert dt in dates;divs[dt]=divs.get(dt,0)+e['cash_amount']
+                actions.append({'ticker':ticker,'date':dt,'type':'cash_dividend_per_share','factor_or_cash':e['cash_amount']})
+        shares=1.;cash=0.;v=[];cf=[];records=[]
+        for dt in dates:
+            if dt>START:shares*=splits.get(dt,1.)
+            cash+=shares*divs.get(dt,0.)
+            price=float(bars.loc[dt,'c']);assert price>0
+            v.append((shares*price+cash)/entry);cf.append(cash/entry)
+            records.append({'date':dt,'formation_ticker':ticker,'source_symbol':symbol,'unadjusted_close':price,'shares_per_initial_share':shares,'cumulative_cash_per_initial_share':cash,'entry_open':entry})
+        legs[ticker]=pd.Series(v,index=dates);cashflows[ticker]=pd.Series(cf,index=dates);entries[ticker]=entry;data.append(pd.DataFrame(records))
+    pd.DataFrame(actions).to_csv(OUT/'corporate_actions.csv',index=False)
     wealth=pd.DataFrame(legs,index=dates)
     paths=pd.DataFrame(index=dates)
     paths['Tangency (gross of costs)']=wealth@weights.tangency_108m
     paths['Value weighted']=wealth@weights.value_weight_2025_12_31
-    paths['Same 24 stocks, equal weight']=wealth.mean(axis=1)
+    paths['Same 30 stocks, equal weight']=wealth.mean(axis=1)
     benchmarks={'ONEQ':'Nasdaq Composite ETF (ONEQ)','QQQ':'Nasdaq-100 ETF (QQQ)','DIA':'Dow ETF (DIA)','SPY':'S&P 500 ETF (SPY)','SGOV':'T-bill ETF proxy (SGOV)'}
     for t,label in benchmarks.items():
         b=yahoo(t);assert list(b.index)==list(dates)
@@ -104,7 +104,6 @@ def run():
     equity_values=pd.DataFrame(index=dates)
     for t in weights.index:
         v=wealth[t]-cashflows[t]
-        if t=='CSGS':v.loc['2026-05-14':]=0
         equity_values[t]=v
     short_notional=equity_values@(-weights.tangency_108m.clip(upper=0))
     dt=pd.to_datetime(dates);calendar_days=np.r_[0,np.diff(dt).astype('timedelta64[D]').astype(float)]
@@ -120,25 +119,39 @@ def run():
     ax.legend(loc='upper left',bbox_to_anchor=(1.01,1),frameon=False)
     fig.text(.07,.025,'Cash dividends included, not reinvested. Tangency excludes borrowing/trading costs and margin constraints. RF ends Aug 31.',fontsize=9)
     fig.tight_layout(rect=(0,.05,1,1));fig.savefig(OUT/'2026_performance.png',dpi=190);plt.close(fig)
-    sec={'CSGS':'https://www.nasdaqtrader.com/TraderNews.aspx?id=ECA2026-319','RYI':'https://www.sec.gov/Archives/edgar/data/1481582/000119312526051335/d29973dex991.htm','HLX':'https://www.sec.gov/Archives/edgar/data/866829/000119312526378529/d102206d8k.htm'}
-    lines=['# 2026 retrospective out-of-estimation-sample tracking','',
-        'Entry: January 2, 2026 official daily opening prices (January 1 holiday). End: October 6, 2026 close. Weights are frozen from the 108-month Stage 1 fit ending December 2025. No 2026 observations enter that fit. Fractional signed shares are permitted; no discretionary rebalancing. Dividends accrue as cash receivables on ex-dates, with zero interest and no reinvestment; short positions owe the same distributions. An ex-dividend date coinciding with entry does not earn a dividend.',
-        '', '## Results','','| Portfolio / benchmark | Through | Return | Maximum drawdown |\n|---|---|---:|---:|\n'+'\n'.join(f'| {z.series} | {z.end_date} | {100*z.total_return:.2f}% | {100*z.max_drawdown:.2f}% |' for z in summary.itertuples()),'','![Cumulative returns](results/2026_performance.png)','',
-        'Main index comparisons use investable ETFs with distributions, not price-only indices. ONEQ tracks the Nasdaq Composite, QQQ the Nasdaq-100, DIA the Dow and SPY the S&P 500. ETF fees are embedded in observed prices. SGOV is a short-Treasury ETF proxy, not a guaranteed risk-free deposit. Official Ken French RF is compounded only through its last available observation, August 31; it is not extrapolated. The first RF day is the daily reference return, not a precisely time-matched intraday cash-account return.',
-        '', '## Mandatory corporate actions','',
-        '- RYI becomes RYZ: existing Ryerson shares continue; the 1.7105 merger exchange ratio applies to Olympic shareholders, not our Ryerson holdings. Yahoo RYZ carries the predecessor history.',
-        '- HLX becomes HOS on September 2: old Helix shares convert 1:1. The 10.27167 ratio in the filing applies to legacy Hornbeck shares, not ours. Yahoo HOS carries predecessor history.',
-        '- CSGS last trades May 13 and converts to $80.70 cash on May 14. The settlement claim is recognized on closing and then held as non-interest-bearing cash; actual receipt delays are not modeled. The short position pays the consideration and terminates. No fabricated post-delisting stock prices.',
-        *[f'- {t} primary source: {url}' for t,url in sec.items()],
-        '', '## Findings','', 'The value-weighted basket returned 7.89%, close to the Dow ETF at 7.92%, below the Nasdaq Composite ETF at 18.50% and Nasdaq-100 ETF at 22.88%. The same basket equal-weighted returned 9.50%. The tangency allocation returned 2.04% before costs, with a 58.76% maximum peak-to-trough drawdown. Its largest negative ending-return contributions were HIW (-26.78 percentage points), VECO (-18.07) and BLMN (-12.53); positive contributions included URI (+22.88) and OSBC (+17.42). Thus this period gives no evidence that the optimized allocation improved realized performance. It does not by itself establish whether text clustering improves stock selection.', '', 'Price cross-check: nine names including all names with daily moves above 20% were compared with Massive across 191 sessions. The maximum closing-price difference across those comparisons was 0.241%; the large jumps are therefore not explained by a Yahoo-only price discrepancy. Minor vendor differences remain; they were not silently overwritten. See results/independent_price_checks.csv. Sources may share upstream exchange data, so this is corroboration rather than independent ground truth.', '', '## Starting-capital downside versus peak-to-trough drawdown','', 'The value-weighted basket briefly fell below its initial capital: minimum cumulative return -0.67%, with 8 negative closing observations. The Dow ETF reached -5.95%, with 25 negative closing observations. Thus the basket experienced a shallower and shorter loss relative to the entry capital in this observed period, while ending with a similar return. This is a favorable descriptive result. It is different from maximum drawdown, which measures losses from a running peak: value -10.00% versus Dow -9.74%. The chart does not show that the basket never lost money, and these results do not establish causal superiority of text clustering or future capital protection.', '', '## Interpretation limits','',
-        'This is retrospectively constructed out-of-estimation-sample performance, not a preregistered or strictly point-in-time strategy. Selection and method decisions were finalized in October 2026; Stage 1 capitalization has timing caveats, including subsequently corroborated shares. No claim is made that this exact portfolio was demonstrably available on December 31, 2025. The 2024 text universe and complete-history filters also induce selection effects.',
-        'A single selected basket versus broad indices cannot isolate the causal benefit of text clustering. The equal-weight same-basket diagnostic separates allocation choice from the chosen stocks only; it does not supply a random or sector-matched control universe. Large gross exposure confounds raw-return comparisons. Show drawdowns and contribution attribution alongside returns; do not interpret a win as proof of classification quality.',
-        'Tangency is an idealized signed-share ledger. It ignores borrow availability, stock-loan fees, taxes, execution slippage, margin calls and liquidation. Short-sale proceeds finance the long legs, and no interest/rebate is modeled. Borrow-fee scenarios apply hypothetical constant annual fees to lagged marked short notionals using calendar days and exclude entry-day intraday fees. They are not actual after-cost returns. If net equity reaches zero, subsequent frictionless values are not an investable survival path.',
-        '', '## Reproduction and data','',
-        'Run `python backtest_2026.py` from this directory. No network or credentials are needed after cache creation. Yahoo daily chart responses provide split-adjusted OHLC and dividend events; no split events occur in this interval. Values use closes plus cash dividends, not adjusted closes plus dividends (which would double-count). CSGS data comes from cached Massive unadjusted bars and dividend responses. Cached sources retain raw numeric values. Main plots are arithmetic cumulative returns with a true entry-time baseline.',
-        'Source requests: Yahoo `/v8/finance/chart/{symbol}?period1=1767139200&period2=1791417600&interval=1d&events=div,splits`; Massive request URLs are archived without authentication. Ken French: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip . Retrieved October 7, 2026.']
-    (ROOT/'README.md').write_text('\n\n'.join(lines))
-    manifest={'start':START,'end':END,'rf_end':rf.index[-1],'stocks':24,'sessions':len(dates),'minimum_tangency_wealth':float(paths.iloc[:,0].min()),'split_events':0,'checks':'Complete calendars; no forward filling; sign-aware cash distributions; weight attribution reconciliation; 1.0 entry wealth.',
+    def table(cols, rows):
+        return '| '+' | '.join(cols)+' |\n| '+' | '.join(['---']*len(cols))+' |\n'+''.join('| '+' | '.join(map(str,r))+' |\n' for r in rows)
+    report = """# 2026 tracking: updated 30-stock capitalization-selected universe
+
+The universe now matches main: one largest end-2024 company by vendor market cap among members with 108 complete monthly returns in each text class. Seven classes substitute the largest complete-history member. See [selection](../docs/03-universe-selection.md). The previous 24-stock experiment remains in Git history; its results must not be mixed with this version.
+
+Entry is Jan 2, 2026 open; endpoint is Oct 6 close. Sample tangency and value weights are the new Stage 1 weights, estimated through Dec 2025. This does not introduce 2026 returns into that estimation, but selection/method choices were made retrospectively in October 2026.
+
+## Performance
+
+"""
+    report += table(['Portfolio','Through','Return','Max drawdown'],[[z.series,z.end_date,f'{z.total_return:+.2%}',f'{z.max_drawdown:.2%}'] for z in summary.itertuples()])
+    report += """
+![Comparison](results/2026_performance.png)
+
+[Ledoit–Wolf covariance comparison](ledoit_wolf/README.md) · [Text distance allocation comparisons](text_weight/README.md).
+
+## Accounting and sources
+
+All 30 stock legs use cached Massive unadjusted OHLC, dated split/stock-distribution factors and cash dividends. Split execution multiplies shares; ex-date cash is the then-current share quantity times cash_amount. Entry-day splits are already reflected in entry price and entry-day dividends are excluded. Cash is retained without interest or reinvestment; shorts owe cash distributions. Corporate actions and daily share/cash ledgers are exported. `validate.py` independently reconstructs all five allocations and compares split-normalized Massive and Yahoo prices for all 30 names; see results/independent_price_checks.csv. This is cross-vendor corroboration, not independent exchange-level ground truth. No missing prices are filled; every stock must cover the common calendar. SF and SCCO have stock-count-changing events; no no-split assumption is made.
+
+ETF benchmark curves retain the existing Yahoo split-adjusted price and matching cash-dividend convention and their original cached observations. There are no split events in those benchmark caches. Official French RF stops Aug 31, 2026; SGOV is a separate full-period T-bill ETF proxy. RF is not extrapolated. Daily RF is a reference convention, not an exact opening-to-closing cash-account return.
+
+## Interpretation limits
+
+This is retrospective out-of-estimation-sample tracking, not a preregistered or certified point-in-time strategy. Historical capitalization, 2024 grouping applied to earlier returns and complete-history screening retain their selection/timing limitations. Stock-versus-index comparisons do not isolate classification skill. Tangency is an idealized leveraged long/short ledger with no borrow availability, financing cost, trading cost, taxes or margin liquidation. Cash earns no interest. Borrow-fee scenarios are assumptions, not actual achieved net returns. No strategy is risk matched to another.
+
+## Reproduce
+
+Run `python backtest_2026.py`, then `python ledoit_wolf/compare.py` and `python text_weight/compare.py`. Dependencies: NumPy, pandas, scikit-learn, SciPy and Matplotlib. All calculation scripts are offline after cache creation. `fetch_sources.py` downloads only missing stock receipts and verifies Singapore egress before reading local credentials. Sanitized responses contain no authentication. Raw prices and corporate-action data remain subject to vendor limitations; this is not an independent audit of every record.
+"""
+    (ROOT/'README.md').write_text(report)
+    manifest={'start':START,'end':END,'rf_end':rf.index[-1],'stocks':30,'sessions':len(dates),'minimum_tangency_wealth':float(paths.iloc[:,0].min()),'split_events':sum(x['type']=='split_or_stock_distribution' for x in actions),'checks':'Complete calendars; no forward filling; sign-aware cash distributions; weight attribution reconciliation; 1.0 entry wealth.',
         'sha256':{str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest() for f in CACHE.glob('*') if f.is_file()}}
     (OUT/'verification.json').write_text(json.dumps(manifest,indent=2));print(summary.to_string(index=False));print(sensitivity.to_string(index=False))
 

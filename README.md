@@ -70,3 +70,7 @@ The historical-cap inputs are frozen, not downloaded by the main program. [Prove
 ## Attribution
 
 Upstream text and return research: TBIC / Tuoyuan. Market data: Massive; filings: SEC EDGAR; historical universe proxy: iShares IWV; standard industry control: SIC-based FF48; RF: Kenneth French Data Library. OpenAI Codex assisted with code, auditing and documentation. The team remains responsible for interpretation and source limitations. This is a course research project, not investment advice.
+
+## Research branch: 2026 tracking
+
+This branch extends the main 30-stock project with [2026 tracking](research_2026/README.md), [Ledoit–Wolf sensitivity](research_2026/ledoit_wolf/README.md) and [text allocation comparisons](research_2026/text_weight/README.md). All use the same new capitalization-selected basket. Old 24-stock experiments are available in Git history.
