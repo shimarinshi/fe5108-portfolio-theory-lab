@@ -1,0 +1,11 @@
+comparison,metric,wins,comparable_years
+Lexical: Original + KMeans48 vs FF48,rho,7,7
+Lexical: Original + KMeans48 vs Historical returns (48),rho,6,6
+Lexical: UMAP3 + KMeans48 vs FF48,rho,7,7
+Lexical: UMAP3 + KMeans48 vs Historical returns (48),rho,5,6
+Lexical: Original + KMeans48 vs FF48,chi10_empirical,7,7
+Lexical: Original + KMeans48 vs Historical returns (48),chi10_empirical,5,6
+Lexical: UMAP3 + KMeans48 vs FF48,chi10_empirical,7,7
+Lexical: UMAP3 + KMeans48 vs Historical returns (48),chi10_empirical,5,6
+TF-IDF/SVD + UMAP3 + Leiden vs FF48,rho,7,7
+TF-IDF/SVD + UMAP3 + Leiden vs Historical returns (48),rho,5,6

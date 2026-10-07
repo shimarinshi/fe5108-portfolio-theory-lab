@@ -1,0 +1,16 @@
+# Local provider data and earlier working copies: never upload.
+/tbic_returns/
+/tbic_stock_pool/
+/local_data/
+/data/raw/
+/data/processed/
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+/work/
+*.log

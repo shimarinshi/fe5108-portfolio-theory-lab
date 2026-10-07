@@ -1,0 +1,7 @@
+representation,text_arm,rho_gap,chi10_empirical_gap,formation,evaluation_year,groups
+TF-IDF/SVD,Four sections,0.136159,0.096257,2024-12-31,2025,48
+TF-IDF/SVD,Item 1A,0.123152,0.091186,2024-12-31,2025,48
+E5,Four sections,0.106257,0.07732,2024-12-31,2025,48
+E5,Item 1A,0.103552,0.077286,2024-12-31,2025,48
+Nomic,Four sections,0.103037,0.073612,2024-12-31,2025,48
+Nomic,Item 1A,0.105494,0.077547,2024-12-31,2025,48

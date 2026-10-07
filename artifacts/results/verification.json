@@ -1,0 +1,15 @@
+{
+  "selected_assets": 24,
+  "monthly_observations_per_asset": 108,
+  "filing_timing": {
+    "issuers": 1910,
+    "latest_available_after": "2024-12-28 21:58:55+00:00",
+    "availability_rule": "SEC acceptance timestamp plus one calendar day",
+    "scope": "Filing eligibility at formation only; not a point-in-time 2017-2025 investment universe."
+  },
+  "daily_replay": {
+    "annual_files": 9,
+    "companies_checked": 1910,
+    "coverage_matches": true
+  }
+}

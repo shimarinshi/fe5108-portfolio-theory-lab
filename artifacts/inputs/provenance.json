@@ -1,0 +1,49 @@
+{
+  "sources": [
+    {
+      "description": "TBIC Leiden: 20261005-nine-routes-final",
+      "filename": "all_years.parquet",
+      "sha256": "e0ef3b8a1c459db766ad79d22d3a4f402cd4213120aeacc16a616ecf1a7475a7"
+    },
+    {
+      "description": "TBIC KMeans48: 20261005-annual-comparison",
+      "filename": "all_years.parquet",
+      "sha256": "733f16eb8f3e2774071b58cc477221236725cc99f97eaeaf42b671c9eb3464cb"
+    },
+    {
+      "description": "TBIC annual report: end-2024 formation / 2025 evaluation",
+      "filename": "annual-study.md",
+      "sha256": "d7ebc35858fddb0bf9f047dc5783e0e83fb13c9aa419f0a4fe06f0e8636021ae"
+    },
+    {
+      "description": "5108 full-company medoid analysis",
+      "filename": "all_company_rankings.parquet",
+      "sha256": "de1483c72227ee597dc3596d07c3499f033e076c069a974b040a229332bc9ad6"
+    },
+    {
+      "description": "TF-IDF/SVD: 20260930T061945Z-tfidf-svd-section-embeddings",
+      "filename": "composite_vectors.parquet",
+      "sha256": "8f663d73bb4bf42f9b2ee31ac4192742d1e974b8ed4f9b399a5e0fecc0f3df61"
+    },
+    {
+      "description": "Formation-eligible SEC section metadata: 2024-12-31",
+      "filename": "sections.parquet",
+      "sha256": "29ae81521ac8441a4fe567ef8e951357ffaca5a63a64c6e36201895720b2e2bb"
+    }
+  ],
+  "derived_inputs": {
+    "artifacts/inputs/kmeans48_multiyear.csv": "fc530ca2accad612460a8f9cc0031ff14a78f51d0ab689859d5cd420f6545b73",
+    "artifacts/inputs/company_metadata_and_coverage_2024.csv": "e17d6a6224e49befd6429f276775522a6e3c8b8d5540d8772f7c898ddc398d30",
+    "artifacts/inputs/section_comparison_2024.csv": "e5bc69df4748a3b20c8a517890973cc1e8b2625d609847a97a67d9b5d1050e4d",
+    "artifacts/inputs/daily_source_coverage.csv": "5c52758ce99ca8dc0c11fdeea31e670b3e1cb5a3eed196f4770b01dace258f12",
+    "artifacts/inputs/tfidf_umap_leiden_assignments.parquet": "4b2760155f4e5923c606a71358315aff7ca40be5ae3e02738a2505809a9a4622",
+    "artifacts/inputs/filing_timing_2024.csv": "c536b0834837476d8756202fc47df7392a36390e90ca4e6ea03bfd8ae21bbe85",
+    "artifacts/inputs/leiden_multiyear.csv": "cc51a12f34b1d6eb89d122f73b003c853baae2603124d42b4e5b47a621bd7fa9",
+    "artifacts/inputs/tfidf_fused_vectors_2024_seed20260831.npz": "ffc7caa44b62b7802693de456faa4660ed7ff754050e5ea445f4a0024b375493"
+  },
+  "notes": [
+    "Raw daily market data and raw SEC text are not committed.",
+    "Source comparison aggregates are reused; their underlying pairwise dependence estimates are not recomputed by this repository.",
+    "Section comparison values are transcribed at six-decimal precision from the source report."
+  ]
+}
