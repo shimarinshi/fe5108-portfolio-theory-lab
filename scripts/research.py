@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INPUTS = ROOT / 'artifacts/inputs'
 RESULTS = ROOT / 'artifacts/results'
 FIGURES = ROOT / 'artifacts/figures'
-EXPECTED = {'AXTA','VECO','HIW','EW','OSBC','URI','SSTK','RYI','CSGS','RSG','DG','VVX','AMBC','DFIN','HSY','DVA','HELE','NYMT','BKH','BYD','BLMN','PLUG','HLX','CCS'}
+
 
 
 def centrality_scores(vectors):
@@ -32,11 +32,10 @@ def centrality_scores(vectors):
 
 
 def select_representatives(ranked):
-    """Select the first eligible member per class, then discard rank >= 5."""
-    eligible = ranked.loc[ranked.eligible_108].sort_values(
-        ['cluster_label', 'centrality_rank', 'cik'])
-    candidates = eligible.groupby('cluster_label', sort=True).head(1).copy()
-    candidates['retained'] = candidates.centrality_rank.lt(5)
+    """Largest formation cap among complete-history members; no centrality cutoff."""
+    valid = ranked.loc[ranked.eligible_108 & ranked.identity_match & ranked.market_cap_usd_raw.gt(0)]
+    candidates = valid.sort_values(['cluster_label','market_cap_usd_raw','cik'], ascending=[True,False,True]).groupby('cluster_label', sort=True).head(1).copy()
+    candidates['retained'] = True
     return candidates
 
 
@@ -86,13 +85,19 @@ def build_selection():
         g['centrality_rank'] = np.arange(1, len(g)+1)
         pieces.append(g)
     ranked = pd.concat(pieces, ignore_index=True)
+    caps = pd.read_csv(INPUTS / 'formation_market_caps_2024.csv', dtype={'cik': str,'returned_cik': str})
+    assert len(caps)==1910 and caps.security_id.is_unique and caps.formation.eq('2024-12-31').all()
+    ranked = ranked.merge(caps[['security_id','market_cap_usd_raw','identity_match','quality_flags']], on='security_id', validate='one_to_one')
+    assert ranked.identity_match.all() and ranked.market_cap_usd_raw.gt(0).all()
+    ranked = ranked.sort_values(['cluster_label','market_cap_usd_raw','cik'],ascending=[True,False,True])
+    ranked['market_cap_rank'] = ranked.groupby('cluster_label').cumcount()+1
     candidates = select_representatives(ranked)
     selected = candidates[candidates.retained].sort_values('cluster_label')
-    if len(candidates) != 30 or set(selected.ticker) != EXPECTED or not selected.complete_months.eq(108).all():
+    if len(candidates) != 30 or len(selected) != 30 or not selected.complete_months.eq(108).all():
         raise ValueError('Frozen universe did not reproduce.')
     ranked.to_csv(RESULTS / 'all_company_rankings_2024.csv', index=False)
     candidates.to_csv(RESULTS / 'candidates_30.csv', index=False)
-    selected.to_csv(RESULTS / 'selected_universe_24.csv', index=False)
+    selected.to_csv(RESULTS / 'selected_universe.csv', index=False)
     seed_table.to_csv(RESULTS / 'representative_seed.csv', index=False)
     (RESULTS / 'selected_tickers.json').write_text(json.dumps(selected.ticker.tolist(), indent=2)+'\n')
     return ranked, selected
@@ -195,4 +200,4 @@ def run(daily_root=None):
     if daily_root:
         report['daily_replay']=verify_daily(daily_root,ranked)
     (RESULTS/'verification.json').write_text(json.dumps(report,indent=2)+'\n')
-    print('Reproduced 24 selected assets, three comparison figures and filing-timing checks.')
+    print('Reproduced 30 selected assets, three comparison figures and filing-timing checks.')

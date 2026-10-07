@@ -1,95 +1,72 @@
 # Portfolio Theory in Practice
 
-**FE5108 group project: from portfolio choice to CAPM, factor models and investment judgment.**
+**FE5108 group project: portfolio choice, CAPM, factor models and investment judgment.**
 
-This repository covers the **whole project**, not only Stage 1. The current checkpoint establishes the data specification, the evidence for text-based universe construction, and a frozen universe of **24 US stocks**. Stage 1 now includes estimated moments, static portfolio weights and subsample comparisons. CAPM regressions, factor models and the final memo remain to be completed.
+The main project now uses **30 US stocks**, one per end-2024 text class, selected by **largest December 31, 2024 company market capitalization among members with 108 complete monthly return observations**. This replaces centrality-based stock selection. Stage 1 has been rebuilt with the new universe, monthly data, mean vectors, covariance matrices, weights and separate subsample tables.
 
 ## Research design
 
-1. Reuse carefully processed **daily total returns**, then compound the chosen stocks to monthly frequency.
-2. Use an existing multi-year SEC text-classification study to choose an economically motivated grouping framework.
-3. Freeze the **end-2024 four-section TF-IDF/SVD -> UMAP3 -> Leiden** classification.
-4. Within each class, rank companies by mean cosine distance to the other members in the original fused 50-dimensional representation. Select the first company with complete 2017-2025 return coverage; discard that class if the selected company's original rank is **5 or worse**.
-5. Hold the resulting 24-stock universe fixed for the course analysis. Compare estimated tangency weights with value weights, then examine CAPM, additional factors and robustness.
+1. Reuse the existing four-section TF-IDF/SVD → UMAP3 → Leiden classification at end-2024 (representative seed 20260831; 30 classes).
+2. Rank each class by historical December 31, 2024 market capitalization. Select its largest member with complete January 2017–December 2025 daily-return coverage. No centrality-rank cutoff is applied.
+3. Freeze all 30 securities and compound daily total returns to 108 monthly observations.
+4. Estimate monthly arithmetic means, sample covariance and unconstrained tangency weights over 108, 96 and 84 months. Compare with fixed **December 31, 2025** capitalization weights in the same universe.
+5. Continue CAPM and additional-factor analyses using the shared monthly inputs. The distance-matrix allocation experiments are separate research, not the Stage 1 weighting formula.
 
-This is a **retrospectively constructed research universe**, not a strategy that could have been selected in 2017. Formation-time filing eligibility is checked separately from look-ahead and survival selection in the full historical study.
+This is a retrospectively constructed course universe. Full-history screening, 2024 classifications applied to earlier returns and retrospective method choices preclude a strict point-in-time investment claim. Historical vendor capitalization is not independently certified; see [selection](docs/03-universe-selection.md) and [endpoint audit](artifacts/stage1/market_cap_audit.md).
 
 ## Frozen universe
 
-AXTA, VECO, HIW, EW, OSBC, URI, SSTK, RYI, CSGS, RSG, DG, VVX, AMBC, DFIN, HSY, DVA, HELE, NYMT, BKH, BYD, BLMN, PLUG, HLX, CCS.
+SHW, AAPL, ABBV, PLD, TMO, SF, VZ, META, SCCO, MSFT, UPS, WMT, PANW, RTX, AFL, ACN, V, EXEL, KO, UNH, WMB, MO, AGNC, CME, SRE, MAR, CMG, TSLA, SLB, DHI.
 
-All 24 have complete daily-return coverage for the **108 months from January 2017 through December 2025** in the supplied panels. Tickers identify the end-2024 formation; stable security IDs, not ticker strings, govern return joins.
+[Selected companies, cap ranks and coverage](artifacts/results/selected_universe.csv) · [All 30 class representatives](artifacts/results/candidates_30.csv) · [All 1,910 company rankings](artifacts/results/all_company_rankings_2024.csv).
 
-- [Selection method and company-level judgment](docs/03-universe-selection.md)
-- [Machine-readable 24-stock universe](artifacts/results/selected_universe_24.csv)
-- [All 30 eligible class representatives, including six exclusions](artifacts/results/candidates_30.csv)
+Twenty-three selected stocks are their classes' absolute vendor-cap leaders. Seven classes use the largest complete-history member instead. The selected fallback ranks are 2–4; these are market-cap ranks, not centrality ranks. All 30 have 108 complete months.
 
-## Why this text framework?
+## Classification evidence
 
-In the matched 48-group study, lexical four-section TF-IDF/SVD classifications exceed FF48 on both Pearson and empirical lower-tail gaps in all seven evaluated years. The single- versus multi-section comparison supports four-section fusion for the lexical method in the end-2024 experiment, not a universal improvement for all representations.
-
-Among nine **native-count Leiden** routes, TF-IDF/SVD + UMAP3 has the highest next-year Pearson within-minus-across gap in all seven years. It also exceeds the historical-return control in **five of six** comparable years. Leiden does not require a fixed number of clusters, which is convenient for an emergent business grouping; it still depends on graph and resolution choices. Neither that property nor these descriptive results proves superior portfolio performance or universally better separation.
+The underlying classification evidence is unchanged. In the matched 48-group study, lexical four-section TF-IDF/SVD exceeds FF48 on Pearson and empirical lower-tail gaps in seven evaluated years. Native-count TF-IDF/SVD + UMAP3 + Leiden leads the nine studied Leiden routes on next-year Pearson gap in those seven years, and beats the historical-return control in five of six comparable years. Group counts vary; these descriptive results do not prove investment outperformance. The multi-text gain is representation-dependent.
 
 ![Native Leiden comparison](artifacts/figures/03_native_leiden_multiyear.png)
 
-*Takeaway: lexical UMAP3 leads these Leiden routes, but group counts vary. FF48 and historical-return controls are contextual benchmarks, not matched-count superiority tests.*
+[Detailed comparisons and qualifications](docs/02-classification-evidence.md).
 
-Read [method comparisons and all three figures](docs/02-classification-evidence.md) for the KMeans48, multi-text and encoder comparisons, including qualifications.
+## Shared data and Stage 1
 
-## Data remain local
+- [Monthly total returns](artifacts/monthly/monthly_total_returns.csv): 108 months × 30 stocks, decimals.
+- [Monthly excess returns](artifacts/monthly/monthly_excess_returns.csv), [aligned RF](artifacts/monthly/risk_free_monthly.csv), and [security-level long table](artifacts/monthly/monthly_returns_long.csv).
+- [Stage 1 report](artifacts/stage1/README.md): full-sample and separate subsample weight tables, mean vectors, full covariance matrices and charts. The 30 × 30 matrices are small enough to remain uncompressed.
+- [2024 selection capitalization](artifacts/inputs/formation_market_caps_2024.csv) and [2025 endpoint capitalization](artifacts/input/year_end_market_cap_2025.csv) serve different purposes. Sanitized endpoint detail responses and selected raw closes are versioned.
 
-**No daily prices, daily returns, raw SEC text, credentials or full historical market-cap series are committed.** The authorized December 31, 2025 market-cap snapshot and its sanitized detail responses are included for reproducibility. Research classification artifacts, compressed text vectors, filing metadata, coverage counts, comparison aggregates, selected-universe outputs and the explicitly authorized monthly stock/RF return tables are versioned.
+Daily market panels, raw SEC text and credentials remain local and excluded from Git. The daily input spans September 30, 2016–December 31, 2025, with first finite return October 3, 2016; the project uses the nine full years 2017–2025. See [data processing](docs/01-data.md) and [artifact documentation](artifacts/README.md).
 
-The supplied daily panel spans **2016-09-30 to 2025-12-31**, with its first finite return on **2016-10-03**. The project uses the nine full years **2017-2025**. Monthly total and excess returns for the 24 stocks are now published in `artifacts/monthly/`, alongside the aligned RF series. Stage 1 uses the single December 31, 2025 capitalization snapshot, with audit limitations documented.
-
-See [data sources and processing](docs/01-data.md) and [artifact provenance and reproduction boundaries](artifacts/README.md).
-
-## Reproduce this checkpoint
-
-Python 3.12+ is recommended. Recorded execution versions are in [environment.json](artifacts/results/environment.json).
+## Reproduce
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
 python -m pip install -r requirements.txt
-python run_all.py
+python run_all.py --stage1
 python -m unittest discover -s tests -v
 ```
 
-The default command reproduces the universe selection, three comparison figures, win counts and filing-time checks from the committed derived artifacts. It does **not** refit TF-IDF/SVD, UMAP or Leiden, recompute the upstream stock-pair dependence study, or execute unfinished course stages.
-
-To independently replay coverage from the locally supplied daily panels:
+This reproduces selection, evidence figures and Stage 1 from committed inputs without network access. It does not refit the upstream text models. To rebuild monthly returns and verify all candidate coverage from local daily panels:
 
 ```bash
-python run_all.py --daily-root ./tbic_returns
+python run_all.py --daily-root ./tbic_returns --monthly --stage1
 ```
 
-The optional local replay checks every one of the 1,910 candidate companies. It fails if the recorded coverage and the supplied panels differ. No external API calls or downloads occur during either command.
+The historical-cap inputs are frozen, not downloaded by the main program. [Provenance](artifacts/inputs/provenance.json) and generated verification files record hashes.
 
-## Whole-project roadmap
+## Project status
 
-| Stage | Required analysis | Status |
-|---|---|---|
-| Data and universe | Sources, classification evidence, frozen stock selection | Completed checkpoint; market-cap input outstanding |
-| Stage 1: portfolio choice | Monthly summary statistics, tangency vs value weights, subsample sensitivity | Next |
-| Stage 2: CAPM | Alpha/beta regressions, SML, joint alpha assessment | Planned |
-| Stage 3: factors | At least two additional factors, before/after alpha comparison | Planned |
-| Stage 4: judgment | Investment memo, alternative market proxy, limitations | Planned |
+| Stage | Status |
+|---|---|
+| Data and universe | Complete: 30 capitalization-selected representatives |
+| Stage 1 | Complete: moments, static weights and subsample sensitivity |
+| Stage 2: CAPM | Planned; select and document market proxy |
+| Stage 3: factors | Planned; supply at least two additional factors |
+| Stage 4: investment judgment | Planned |
 
-[Next-step input contracts](docs/04-next-steps.md) specify monthly compounding, RF units, and lagged market-cap weights. [Team contribution template](docs/contributions.md) is for the final submission.
+[Next-stage contracts](docs/04-next-steps.md) · [Team contributions](docs/contributions.md).
 
 ## Attribution
 
-Upstream data and text-classification research: TBIC / Tuoyuan, with specific run IDs and hashes recorded in [provenance](artifacts/inputs/provenance.json). Market data: Massive; filings: SEC EDGAR; historical universe proxy: iShares IWV holdings; standard benchmark: SEC SIC mapped to Fama-French 48 industries; risk-free series: Kenneth French Data Library.
-
-AI assistance: OpenAI Codex assisted with data auditing, reproducible selection code, evidence visualization and documentation. The team remains responsible for all results and interpretations. This repository is a research checkpoint, not an investment recommendation.
-
-## Monthly return tables
-
-[Monthly total returns](artifacts/monthly/monthly_total_returns.csv) and [monthly excess returns](artifacts/monthly/monthly_excess_returns.csv) each contain 108 months by 24 stocks (January 2017-December 2025), in decimals. [Long-form observations](artifacts/monthly/monthly_returns_long.csv) retain security IDs and coverage counts; [RF](artifacts/monthly/risk_free_monthly.csv) is aligned to the same months. See the [monthly README](artifacts/monthly/README.md).
-
-Rebuild from the local daily files with `python scripts/monthly.py --daily-root ./tbic_returns`, or reproduce both checkpoints with `python run_all.py --daily-root ./tbic_returns --monthly`. Daily market observations remain excluded from Git.
-
-## Stage 1 results
-
-[Read Stage 1: means, covariance matrices, separate weight tables and interpretation](artifacts/stage1/README.md). Run `python run_all.py --stage1` to reproduce. The three mean-vector CSVs and three 24-by-24 covariance CSVs are small enough to remain uncompressed.
+Upstream text and return research: TBIC / Tuoyuan. Market data: Massive; filings: SEC EDGAR; historical universe proxy: iShares IWV; standard industry control: SIC-based FF48; RF: Kenneth French Data Library. OpenAI Codex assisted with code, auditing and documentation. The team remains responsible for interpretation and source limitations. This is a course research project, not investment advice.

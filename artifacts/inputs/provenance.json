@@ -39,11 +39,13 @@
     "artifacts/inputs/tfidf_umap_leiden_assignments.parquet": "4b2760155f4e5923c606a71358315aff7ca40be5ae3e02738a2505809a9a4622",
     "artifacts/inputs/filing_timing_2024.csv": "c536b0834837476d8756202fc47df7392a36390e90ca4e6ea03bfd8ae21bbe85",
     "artifacts/inputs/leiden_multiyear.csv": "cc51a12f34b1d6eb89d122f73b003c853baae2603124d42b4e5b47a621bd7fa9",
-    "artifacts/inputs/tfidf_fused_vectors_2024_seed20260831.npz": "ffc7caa44b62b7802693de456faa4660ed7ff754050e5ea445f4a0024b375493"
+    "artifacts/inputs/tfidf_fused_vectors_2024_seed20260831.npz": "ffc7caa44b62b7802693de456faa4660ed7ff754050e5ea445f4a0024b375493",
+    "artifacts/inputs/formation_market_caps_2024.csv": "d4a8aceabe5ba7e7c7341f9ea8af4d37bb6729639de9d18d9dad87bb860dc087"
   },
   "notes": [
     "Raw daily market data and raw SEC text are not committed.",
     "Source comparison aggregates are reused; their underlying pairwise dependence estimates are not recomputed by this repository.",
     "Section comparison values are transcribed at six-decimal precision from the source report."
-  ]
+  ],
+  "capitalization_selection_note": "2024-12-31 Massive historical issuer caps for all 1910 members; extracted from identity-matched raw local receipts; no current caps. Historical query is not certified publication-time data."
 }

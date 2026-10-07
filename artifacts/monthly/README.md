@@ -1,8 +1,8 @@
 # Monthly stock and risk-free returns
 
-The fixed 24-stock universe, January 2017-December 2025: **108 months, 2,592 asset-month observations**, no missing returns. Daily returns are not uploaded.
+The fixed 30-stock universe, January 2017-December 2025: **108 months, 3,240 asset-month observations**, no missing returns. Daily returns are not uploaded.
 
-- `monthly_total_returns.csv`: 108 rows, 24 ticker columns plus month. Simple total returns in decimals.
+- `monthly_total_returns.csv`: 108 rows, 30 ticker columns plus month. Simple total returns in decimals.
 - `monthly_excess_returns.csv`: stock total return minus the same month's RF, in decimals.
 - `monthly_returns_long.csv`: stable security ID, formation ticker, CIK, trading-day count, first/last trading dates, total return, RF, and excess return.
 - `risk_free_monthly.csv`: Kenneth French monthly RF, both original percent and decimal units, with underlying-source annotation. Do not divide monthly RF by 12.
@@ -14,4 +14,5 @@ RF source: [Kenneth French Data Library](https://mba.tuck.dartmouth.edu/pages/fa
 
 Reproduction: `python scripts/monthly.py --daily-root ./tbic_returns`. The raw files must be supplied locally. `python run_all.py --daily-root ./tbic_returns --monthly` reproduces the selection and monthly checkpoints together.
 
-Retain January 2017 in the return dataset. If December 2016 capitalization is unavailable, a later analysis using prior-month weights can start February 2017 and use 107 months. Missing market caps for other dates still require resolution; dropping one initial month does not fix unreliable historical share counts. No market-cap weights or portfolio estimates are claimed here.
+
+Stage 1 uses one static December 31, 2025 capitalization snapshot. All 30 columns were rebuilt from original daily panels after the capitalization-selection change.

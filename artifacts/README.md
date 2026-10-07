@@ -13,11 +13,11 @@
 
 ## Versioned outputs
 
-`results/` contains the frozen 24-stock universe, the 30 pre-cutoff class representatives, all-company ranks, representative-seed evidence, comparison win counts and verification records. `figures/` contains three regenerated comparison charts.
+`results/` contains the frozen 30-stock universe, the 30 retained class representatives, all-company ranks, representative-seed evidence, comparison win counts and verification records. `figures/` contains three regenerated comparison charts.
 
 ## What can be reproduced?
 
-The default entry point recomputes centrality and selection from vectors and labels, chooses the representative seed from the five observed partitions, validates filing timing, recounts comparative wins and redraws the figures. The optional daily-root argument replays company coverage against local market data.
+The default entry point recomputes descriptive centrality from vectors and selects by historical capitalization and complete-history coverage, chooses the representative seed from the five observed partitions, validates filing timing, recounts comparative wins and redraws the figures. The optional daily-root argument replays company coverage against local market data.
 
 The committed comparison tables are **upstream measured results**, not new independent reruns of embeddings, UMAP, Leiden, daily pair support or dependence estimation. This repo cannot recreate that entire study from raw inputs; it preserves enough evidence for the present selection and documents the boundary.
 
@@ -33,4 +33,8 @@ The source study was exploratory. Run IDs and hashes identify evidence; they do 
 
 ## Authorized monthly market outputs
 
-`monthly/` now contains compounded monthly total returns, RF and excess returns explicitly approved for upload. This supersedes the initial market-data exclusion only for these monthly outputs; daily observations and raw provider responses remain local.
+`monthly/` now contains compounded monthly total returns, RF and excess returns explicitly approved for upload. This supersedes the initial market-data exclusion only for these monthly outputs; daily return observations remain local; sanitized endpoint ticker-overview responses and selected endpoint closes are explicitly included.
+
+## Capitalization inputs
+
+`inputs/formation_market_caps_2024.csv` contains all 1,910 identity-matched formation caps used to rank candidates. `input/year_end_market_cap_2025.csv` and its sanitized detail receipts cover the 30 selected endpoint issuers used for Stage 1 value weights. The former selects stocks; the latter weights the fixed basket. Original centrality results remain in Git history.
