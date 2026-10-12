@@ -1,0 +1,12 @@
+{
+  "source": "MSCI official historical index export",
+  "index_code": "990100",
+  "index_name": "MSCI World Standard (Large+Mid Cap)",
+  "currency": "USD",
+  "variant": "NETR",
+  "return_type": "net_total_return",
+  "source_url": "https://app2.msci.com/products/service/index/indexmaster/downloadLevelData?output=INDEX_LEVELS&currency_symbol=USD&index_variant=NETR&start_date=20161201&end_date=20251231&data_frequency=end_of_month&index_codes=990100",
+  "retrieved_at": "2026-10-12T09:19:55.709771+00:00",
+  "raw_xls_sha256": "13f28b0a5ccfff4ed34a34b290cb7da339bcb557cdc6a7382692aad415f76c6d",
+  "source_precision_decimal_places": 3
+}
