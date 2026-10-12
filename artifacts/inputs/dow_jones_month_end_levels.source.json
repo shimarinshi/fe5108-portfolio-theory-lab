@@ -1,0 +1,9 @@
+{
+  "symbol": "^DJI",
+  "source": "Yahoo Finance chart daily close",
+  "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EDJI?period1=1480550400&period2=1767225600&interval=1d",
+  "retrieved_at": "2026-10-12T09:09:47.744677+00:00",
+  "daily_response_sha256": "2eaf9ef513bb991a29afd7b777e66785343b66a34936df8cc6a444d156865048",
+  "raw_daily_uploaded": false,
+  "description": "Last observed NY trading-session close per month; 2016-12 is the return base. Price index, excludes dividends."
+}

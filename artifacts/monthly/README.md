@@ -16,3 +16,11 @@ Reproduction: `python scripts/monthly.py --daily-root ./tbic_returns`. The raw f
 
 
 Stage 1 uses one static December 31, 2025 capitalization snapshot. All 30 columns were rebuilt from original daily panels after the capitalization-selection change.
+
+## Dow Jones Industrial Average monthly benchmark
+
+`dow_jones_monthly.csv` contains **108 matching months (2017-01 to 2025-12)** for the actual DJIA price index, Yahoo symbol `^DJI`. Includes current/previous month-end trading dates and index levels, monthly price return, matching monthly RF and excess price return. All returns are decimals.
+
+Formula: `price_return_decimal = index_close / previous_month_end_index_close - 1`. The 2016-12 month-end level supplies the January 2017 base. Month-end dates match the existing stock panel; no missing monthly values. This is a **price index excluding dividends**, not a total-return index and not the DIA ETF used in exploratory tracking. Stock total returns and this price benchmark therefore differ in dividend treatment. `excess_price_return_decimal` subtracts RF but does not add dividends.
+
+Source: [Yahoo Finance DJIA historical data](https://finance.yahoo.com/quote/%5EDJI/history/), daily closes aggregated using America/New_York trading dates. The 109 month-end input levels and retrieval metadata are in `../inputs/dow_jones_month_end_levels.csv` and its `.source.json` sidecar. Raw daily data remain local. Offline reproduction: `python scripts/dow_monthly.py`.
