@@ -90,9 +90,16 @@ def _run(root=None):
 
     stock_excess = stock_excess.loc[:, tickers].apply(pd.to_numeric, errors="raise")
 
-    rf = pd.to_numeric(rf_data["rf_monthly_decimal"], errors="raise").rename("rf")
+    ff3 = ff3.loc[:, ["Mkt-RF", "SMB", "HML", "RF", "Rm"]].apply(pd.to_numeric, errors="raise")
 
-    ff3 = ff3.loc[:, ["Mkt-RF", "SMB", "HML", "RF"]].apply(pd.to_numeric, errors="raise")
+    rf = ff3["RF"].rename("rf")
+
+    np.testing.assert_allclose(
+        ff3["Rm"].to_numpy(),
+        (ff3["Mkt-RF"] + ff3["RF"]).to_numpy(),
+        rtol=0, atol=1e-12,
+        err_msg="Stored FF3 Rm does not equal Mkt-RF + RF",
+    )
 
     market_excess = ff3["Mkt-RF"].rename("market_excess")
 
@@ -117,8 +124,8 @@ def _run(root=None):
     )
 
     np.testing.assert_allclose(
-        ff3["RF"].to_numpy(), rf.to_numpy(), rtol=0, atol=1e-12,
-        err_msg="Instructor factor RF does not match Stage 1 RF; check sources and units",
+        rf_data["rf_monthly_decimal"].to_numpy(dtype=float), rf.to_numpy(), rtol=0, atol=1e-12,
+        err_msg="Stage 1 RF does not match canonical FF3 RF; check sources and units",
     )
 
     np.testing.assert_allclose(
@@ -127,6 +134,8 @@ def _run(root=None):
         err_msg="Stage 1 excess returns do not equal total returns minus RF",
     )
 
+    # Stage 1 cached values are checked above; actual Stage 2 RF comes from FF3.
+    stock_excess = stock_total.sub(rf, axis=0)
     capm_data = stock_excess.join(market_excess, how="left", validate="one_to_one")
 
     capm_data = capm_data.join(rf, how="left", validate="one_to_one")
@@ -166,6 +175,9 @@ def _run(root=None):
         "units": "monthly decimals",
         "market_proxy": "Kenneth French US market excess return, Mkt-RF",
         "factor_source": "Instructor fallback data_bundle/data/ff3_monthly.csv",
+        "risk_free_source": "artifacts/inputs/ff3_monthly.csv: RF",
+        "stored_market_return": "FF3 Rm = Mkt-RF + RF; validated, not an extra regressor",
+        "stage1_rf_role": "Consistency check only; not the Stage 2 RF calculation source",
         "rf_matches_stage1": True,
         "excess_matches_total_minus_rf": True,
         "missing_values": int(capm_data.isna().sum().sum()),
@@ -326,7 +338,7 @@ def _run(root=None):
             "note": "HAC t-distribution p-values are an approximation, not exact finite-sample inference",
         },
         "checks_passed": [
-            "stage1_mean_consistency", "Y_equals_fitted_plus_residual",
+            "FF3_Rm_identity", "stage1_mean_consistency", "Y_equals_fitted_plus_residual",
             "zero_residual_mean", "residual_orthogonality", "SML_mean_identity",
         ],
         "inputs_sha256": recorded_inputs["inputs_sha256"],
