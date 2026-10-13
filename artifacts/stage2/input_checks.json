@@ -39,6 +39,9 @@
   "units": "monthly decimals",
   "market_proxy": "Kenneth French US market excess return, Mkt-RF",
   "factor_source": "Instructor fallback data_bundle/data/ff3_monthly.csv",
+  "risk_free_source": "artifacts/inputs/ff3_monthly.csv: RF",
+  "stored_market_return": "FF3 Rm = Mkt-RF + RF; validated, not an extra regressor",
+  "stage1_rf_role": "Consistency check only; not the Stage 2 RF calculation source",
   "rf_matches_stage1": true,
   "excess_matches_total_minus_rf": true,
   "missing_values": 0,
@@ -47,7 +50,7 @@
     "artifacts/monthly/monthly_total_returns.csv": "60a949c17a05a43f10f9046dbee5b00f1cd61f4e7504e4e61c9ab83792c57b6a",
     "artifacts/monthly/monthly_excess_returns.csv": "8a223fe1e0ae722c2055adde51b34db0da7d84c9e3392a394e6cd2aa93ebd118",
     "artifacts/monthly/risk_free_monthly.csv": "ab249df8d9674566b66f7192fac803b8ac0d40aba00ad619b3dcc7745e69b054",
-    "artifacts/inputs/ff3_monthly.csv": "76e8197e3565cfcddca04223995eff390be5451a9f805529ce7837fb8bb602ed"
+    "artifacts/inputs/ff3_monthly.csv": "52dc4ba3acbd3843966bd38c52b9036ea86d75ed5100d766002c81879e2ab15e"
   },
   "packages": {
     "numpy": "2.4.6",

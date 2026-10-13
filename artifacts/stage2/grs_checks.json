@@ -40,10 +40,10 @@
     "months": 108,
     "assets": 30,
     "factors": 1,
-    "grs_statistic": 1.1465441772397547,
+    "grs_statistic": 1.1465441772397538,
     "df1": 30,
     "df2": 77,
-    "p_value": 0.30992794821055153,
+    "p_value": 0.3099279482105514,
     "significance_level": 0.05,
     "critical_value": 1.6072683247555866,
     "reject_joint_zero_alpha": false
@@ -51,7 +51,7 @@
   "residual_covariance": "E.T @ E / T",
   "market_variance": "Variance of market excess returns with ddof=0",
   "formula": "(T-N-K)/N * (alpha.T @ solve(Sigma_e, alpha)) / (1 + mean_market**2 / var_market)",
-  "residual_covariance_condition_number": 65.16071271802909,
+  "residual_covariance_condition_number": 65.16071271802903,
   "checks_passed": [
     "common_sample_and_asset_order",
     "valid_F_degrees_of_freedom",
@@ -61,10 +61,10 @@
   "assumptions": "Conditionally joint-normal residuals, constant nonsingular covariance, and independence across time",
   "inference_note": "Classical finite-sample F reference; this test does not use HAC covariance",
   "inputs_sha256": {
-    "artifacts/stage2/capm_input_monthly.csv": "b1b0691eecb1ec2b568b0671b039cc8eaeaab02765c8a8fd1408abf6ddc471ea",
-    "artifacts/stage2/capm_results.csv": "78fa04bb20381094d306ebf1f142c803b0a306f4a9eaec159d13c64d2af537ed",
-    "artifacts/stage2/capm_residuals.csv": "6bf02e92a581d394157e98f000d58e26b959ec2224f413b4c24282e9e1a7e41d",
-    "artifacts/stage2/capm_checks.json": "dcd2b65f639998c9bbd45d6e962ce5978d8fe65b4023c84f52bc46209894114f"
+    "artifacts/stage2/capm_input_monthly.csv": "4d5c8efcb9a3047c886386646a23c688f70b9a8a670d040c501a7631789cec66",
+    "artifacts/stage2/capm_results.csv": "d1a71ec5c23f83add6eca6656c067c0a7ef667313cc003ff5e6117928718ef36",
+    "artifacts/stage2/capm_residuals.csv": "c1307c0e29510769f36befa5bc4efe34271fae1bfca37498f7b09e2849f387ea",
+    "artifacts/stage2/capm_checks.json": "b9d1e46f5022ba3fee821eab94c2a8e14596d4ee7c7734c260d7ce5cde65b613"
   },
   "packages": {
     "numpy": "2.4.6",
