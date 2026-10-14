@@ -1,7 +1,7 @@
 """Stage 4 market-proxy sensitivity: MSCI World USD net total return.
 
 Run: python scripts/stage4.py
-Replicates Stage 2 methods; writes only artifacts/stage4/msci_world.
+Replicates Stage 2 methods; writes only artifacts/stage4.
 Requires existing Stage 2 outputs for validated French-versus-MSCI comparisons.
 """
 from pathlib import Path
@@ -42,7 +42,7 @@ def read_monthly(path, date_column, expected_months):
 def _run(root=None):
     ROOT = Path(root).resolve() if root is not None else Path(__file__).resolve().parents[1]
 
-    OUT_DIR = ROOT / "artifacts/stage4/msci_world"
+    OUT_DIR = ROOT / "artifacts/stage4"
 
     FIG_DIR = OUT_DIR
 
