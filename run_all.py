@@ -22,7 +22,14 @@ def main():
         "--stage2", action="store_true",
         help="Build CAPM, SML and GRS exhibits; also rebuild the required Stage 1 outputs.",
     )
+    parser.add_argument(
+        "--stage4", action="store_true",
+        help="Build MSCI World CAPM, SML, GRS and comparisons; also rebuild Stage 1 and Stage 2 outputs.",
+    )
     args = parser.parse_args()
+
+    if args.stage4:
+        args.stage2 = True
 
     run_research(args.daily_root)
 
@@ -37,6 +44,10 @@ def main():
     if args.stage2:
         from scripts.stage2 import run as run_stage2
         run_stage2()
+
+    if args.stage4:
+        from scripts.stage4 import run as run_stage4
+        run_stage4()
 
 
 if __name__ == "__main__":
