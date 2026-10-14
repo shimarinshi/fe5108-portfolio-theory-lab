@@ -114,6 +114,33 @@ If Stage 1 outputs already exist, Stage 2 can also run directly:
 python3 scripts/stage2.py
 ```
 
+### Stage 4: MSCI World market-proxy comparison
+
+To reproduce the Stage 4 market-proxy analysis and its comparisons with Stage 2, run:
+
+```bash
+python3 run_all.py --stage4
+```
+
+This runs the research workflow, Stage 1, Stage 2 and then Stage 4 in that order. Stage 1 and Stage 2 are rebuilt automatically to supply the required inputs and the original-market baseline. Stage 3 is not invoked by this command.
+
+Stage 4 uses `excess_net_total_return_decimal` from `artifacts/monthly/msci_world_monthly.csv` as the market excess return, retaining the same 30 stocks, 108 months (January 2017–December 2025), and CAPM, SML and GRS methods as Stage 2.
+
+If the required Stage 1 and Stage 2 outputs already exist, Stage 4 can also run directly:
+
+```bash
+python3 scripts/stage4.py
+```
+
+The script writes 20 generated files directly to [artifacts/stage4](artifacts/stage4/), including the MSCI World CAPM estimates, SML figure, GRS results, diagnostic records, and the following comparisons:
+
+- [Alpha, beta and alpha-significance comparison](artifacts/stage4/alpha_beta_comparison.csv), with OLS and HAC(3) results.
+- [GRS comparison](artifacts/stage4/grs_comparison.csv).
+- [Comparison summary](artifacts/stage4/comparison_summary.json).
+- [Readable comparison report](artifacts/stage4/comparison_report.md).
+
+Existing generated outputs are overwritten on rerun. Close any output CSV files open in Excel before running to avoid file-lock errors on Windows. The script does not regenerate the written investment-judgment Markdown files.
+
 ### Verified environment
 
 The integrated pipeline was verified with Python 3.12.1 and the versions below. Dependency ranges in `requirements.txt` preserve the existing project constraints; statsmodels is pinned to the tested version. Runtime JSON files record the actual packages used for each run.
