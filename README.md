@@ -114,6 +114,20 @@ If Stage 1 outputs already exist, Stage 2 can also run directly:
 python3 scripts/stage2.py
 ```
 
+To reproduce Stage 4 with MSCI World as the market proxy:
+
+```bash
+python3 run_all.py --stage4
+```
+
+`--stage4` automatically runs Stage 1 and Stage 2 first, then generates the MSCI World CAPM, SML and GRS results and comparisons with Stage 2. Outputs are saved to `artifacts/stage4/`.
+
+If Stage 1 and Stage 2 outputs already exist, Stage 4 can also run directly:
+
+```bash
+python3 scripts/stage4.py
+```
+
 ### Verified environment
 
 The integrated pipeline was verified with Python 3.12.1 and the versions below. Dependency ranges in `requirements.txt` preserve the existing project constraints; statsmodels is pinned to the tested version. Runtime JSON files record the actual packages used for each run.
