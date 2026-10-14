@@ -81,6 +81,28 @@ The classical GRS test uses residual covariance `E.T @ E / T` and market varianc
 
 The fitted SML has a monthly intercept of 0.2108% and slope of 1.2396%, compared with a theoretical slope of 1.0771%; its cross-sectional R-squared is 0.3164. GRS is 1.1465 with p-value 0.3099, so the joint zero-alpha null is not rejected at 5%. These results do not establish that the CAPM holds. The SML slope and intercept comparisons are descriptive; no formal significance claim is made for their differences. A different market proxy remains part of Stage 4.
 
+## Stage 4 Investment Judgment
+
+Stage 4 combines an investment recommendation, a market-proxy comparison and an assessment of the result we trust least.
+
+### Investment recommendation
+
+We recommend a constrained allocation between value weighting and the estimated tangency portfolio. The tangency portfolio's higher in-sample Sharpe and stronger 2026 tracking return support retaining active allocations, but leverage, estimation sensitivity and implementation costs limit the case for holding it without constraints. See [the full recommendation](artifacts/stage4/stage_4a.md).
+
+### Market-proxy comparison
+
+[`scripts/stage4.py`](scripts/stage4.py) repeats Stage 2 using `excess_net_total_return_decimal` from `artifacts/monthly/msci_world_monthly.csv`, retaining the same 30 stocks, 108 months and estimation methods.
+
+Mean absolute changes are **0.0951 percentage points per month for alpha** and **0.0808 for beta**. AAPL joins MSFT and WMT as having significant alphas at the unadjusted 5% level under both OLS and HAC(3). The GRS p-value falls from **0.3099 to 0.1154**, but neither proxy rejects joint zero alpha at 5%. These results illustrate that CAPM conclusions depend partly on the market proxy, consistent with Roll's critique.
+
+### Result we trust least
+
+We are least confident that the tangency portfolio's in-sample Sharpe of **2.197** represents future achievable performance. Weights were optimized and evaluated on the same sample, while the 2026 tracking evidence retains retrospective-selection and cost limitations. See [the limitations assessment](artifacts/stage4/stage_4c.md).
+
+### Outputs
+
+Results are saved to `artifacts/stage4/`, including CAPM, SML and GRS outputs. Main comparisons are available in [`alpha_beta_comparison.csv`](artifacts/stage4/alpha_beta_comparison.csv), [`grs_comparison.csv`](artifacts/stage4/grs_comparison.csv) and [`comparison_report.md`](artifacts/stage4/comparison_report.md).
+
 ## Reproduce
 
 From the repository root, install the dependencies and regenerate the completed stages:
