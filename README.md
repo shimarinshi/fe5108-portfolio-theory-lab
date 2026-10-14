@@ -150,7 +150,7 @@ The integrated pipeline was verified with Python 3.12.1 and the versions below. 
 | Stage 1 | Complete: moments, static weights and subsample sensitivity |
 | Stage 2: CAPM | Complete: CAPM table, SML and GRS; integrated into the entry point |
 | Stage 3: factors | Planned; supply at least two additional factors |
-| Stage 4: investment judgment | Complete |
+| Stage 4: investment judgment | Complete: investment recommendation, market-proxy comparison and limitations |
 
 [Next-stage contracts](docs/04-next-steps.md) · [Team contributions](docs/contributions.md).
 
