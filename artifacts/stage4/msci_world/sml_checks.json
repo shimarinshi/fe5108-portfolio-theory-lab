@@ -1,0 +1,75 @@
+{
+  "sample_start": "2017-01",
+  "sample_end": "2025-12",
+  "months": 108,
+  "assets": 30,
+  "tickers": [
+    "SHW",
+    "AAPL",
+    "ABBV",
+    "PLD",
+    "TMO",
+    "SF",
+    "VZ",
+    "META",
+    "SCCO",
+    "MSFT",
+    "UPS",
+    "WMT",
+    "PANW",
+    "RTX",
+    "AFL",
+    "ACN",
+    "V",
+    "EXEL",
+    "KO",
+    "UNH",
+    "WMB",
+    "MO",
+    "AGNC",
+    "CME",
+    "SRE",
+    "MAR",
+    "CMG",
+    "TSLA",
+    "SLB",
+    "DHI"
+  ],
+  "market_proxy": "MSCI World USD net total return minus RF",
+  "units": "monthly decimals in CSVs; percentage labels in figure",
+  "empirical_method": "Equal-weight cross-sectional OLS with intercept",
+  "theoretical_intercept": 0.0,
+  "theoretical_slope": 0.009043666711256136,
+  "empirical_intercept": 0.0028194300534468263,
+  "empirical_slope": 0.010748274177833046,
+  "slope_minus_theory": 0.0017046074665769094,
+  "cross_sectional_r_squared": 0.24942192072583114,
+  "observed_beta_range": [
+    0.3547860208098414,
+    1.9945278872607168
+  ],
+  "labelled_tickers": [
+    "TSLA",
+    "SLB",
+    "PANW",
+    "AAPL",
+    "MSFT",
+    "WMT"
+  ],
+  "checks_passed": [
+    "common_sample",
+    "alpha_equals_theory_deviation",
+    "zero_cross_sectional_residual_mean"
+  ],
+  "interpretation": "Descriptive SML; estimated beta and cross-asset dependence prevent treating ordinary cross-sectional p-values as a formal CAPM pricing test. The intercept at beta=0 can be an extrapolation.",
+  "inputs_sha256": {
+    "capm_results.csv": "ee5c152b91bf531a2b9a4c9872797d64652d6f768fde3d63982d998a74692c99",
+    "capm_input_monthly.csv": "cfd7764c9b951cae8f7574ab6124aff3a952c9e105c1c0c65ce594ae8d8e43f2"
+  },
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "3.0.1",
+    "statsmodels": "0.14.6",
+    "matplotlib": "3.11.2"
+  }
+}
