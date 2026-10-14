@@ -98,7 +98,7 @@ python3 run_all.py --stage1
 python3 -m unittest discover -s tests -v
 ```
 
-The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice exhibits; `--stage2` adds CAPM, SML and GRS. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
+The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice exhibits; `--stage2` adds CAPM, SML and GRS. `--stage4` adds the MSCI World market-proxy analysis and comparisons with Stage 2. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
 
 The pipeline runs offline from the versioned cached inputs. It does not refit upstream text models or recreate vendor daily panels. To rebuild monthly returns from local daily data before running both stages:
 
