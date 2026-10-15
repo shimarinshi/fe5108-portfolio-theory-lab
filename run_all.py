@@ -30,7 +30,14 @@ def main():
         "--stage3", action="store_true",
         help="Build FF3 factor exhibits; also rebuild the required Stage 1 and Stage 2 outputs.",
     )
+    parser.add_argument(
+        "--all", action="store_true",
+        help="Run all four course stages from cached inputs (no daily data or network required).",
+    )
     args = parser.parse_args()
+
+    if args.all:
+        args.stage1 = args.stage2 = args.stage3 = args.stage4 = True
 
     if args.stage3 or args.stage4:
         args.stage2 = True
