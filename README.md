@@ -2,7 +2,7 @@
 
 **FE5108 group project: portfolio choice, CAPM, factor models and investment judgment.**
 
-The main project now uses **30 US stocks**, one per end-2024 text class, selected by **largest December 31, 2024 company market capitalization among members with 108 complete monthly return observations**. This replaces centrality-based stock selection. Stage 1 uses the frozen universe, monthly data, mean vectors, covariance matrices, weights and separate subsample tables. Stage 2 is complete: CAPM regressions, the empirical and theoretical Security Market Lines, and the GRS joint alpha test.
+The main project now uses **30 US stocks**, one per end-2024 text class, selected by **largest December 31, 2024 company market capitalization among members with 108 complete monthly return observations**. This replaces centrality-based stock selection. Stage 1 uses the frozen universe, monthly data, mean vectors, covariance matrices, weights and separate subsample tables. Stages 1–4 are integrated: portfolio choice, CAPM/SML/GRS, FF3 factor analysis and an alternative market-proxy comparison.
 
 ## Research design
 
@@ -11,7 +11,7 @@ The main project now uses **30 US stocks**, one per end-2024 text class, selecte
 3. Freeze all 30 securities and compound daily total returns to 108 monthly observations.
 4. Estimate monthly arithmetic means, sample covariance and unconstrained tangency weights over 108, 96 and 84 months. Compare with fixed **December 31, 2025** capitalization weights in the same universe.
 5. Estimate Stage 2 CAPM regressions on the same 30 stocks and 108 months, using Kenneth French `Mkt-RF` as the market proxy. Compare the empirical SML with theory and assess all alphas jointly with GRS.
-6. Extend the analysis with additional factors and a different market proxy in Stages 3 and 4. The distance-matrix allocation experiments are separate research, not the Stage 1 weighting formula.
+6. Add published SMB and HML in Stage 3, then compare the CAPM market proxy with MSCI World in Stage 4. The distance-matrix allocation experiments are separate research, not the Stage 1 weighting formula.
 
 This is a retrospectively constructed course universe. Full-history screening, 2024 classifications applied to earlier returns and retrospective method choices preclude a strict point-in-time investment claim. Historical vendor capitalization is not independently certified; see [selection](docs/03-universe-selection.md) and [endpoint audit](artifacts/stage1/market_cap_audit.md).
 
@@ -81,6 +81,16 @@ The classical GRS test uses residual covariance `E.T @ E / T` and market varianc
 
 The fitted SML has a monthly intercept of 0.2108% and slope of 1.2396%, compared with a theoretical slope of 1.0771%; its cross-sectional R-squared is 0.3164. GRS is 1.1465 with p-value 0.3099, so the joint zero-alpha null is not rejected at 5%. These results do not establish that the CAPM holds. The SML slope and intercept comparisons are descriptive; no formal significance claim is made for their differences. A different market proxy remains part of Stage 4.
 
+## Stage 3 Fama–French factor analysis
+
+[`scripts/stage3.py`](scripts/stage3.py) adds published SMB and HML to the Stage 2 market factor, using the same 30 stocks and 108 months (January 2017–December 2025). It reads the shared cached FF3 file; factors are not constructed from our selected stocks. All returns enter the regressions as monthly decimals.
+
+The program verifies RF alignment and reproduces Stage 2 CAPM alphas, OLS t-statistics and R-squared before comparing CAPM with FF3. It reports OLS inference, HAC(3) alpha inference and a per-stock joint test of SMB/HML loadings. The joint loading test is not an alpha test or an FF3 GRS test.
+
+Absolute alpha falls for 13 of 30 stocks; mean absolute monthly alpha changes from 0.594% to 0.574%. Among the two stocks crossing the descriptive CAPM `|OLS t(alpha)| > 2` screen, MSFT continues to cross it under FF3 while WMT does not. These unadjusted screens do not establish mispricing or prove that the additional factors explain abnormal returns.
+
+See the [Stage 3 report](artifacts/stage3/README.md), [factor definitions](artifacts/stage3/exhibit_3a_factor_construction.md), [30-stock comparison table](artifacts/stage3/exhibit_3b_alpha_before_after.csv), [comparison chart](artifacts/stage3/exhibit_3b_alpha_before_after.png), [verdict](artifacts/stage3/exhibit_3c_verdict.md), and [full estimates](artifacts/stage3/all_30_model_results.csv). `checks.json` records input hashes, sample checks and package versions.
+
 ## Stage 4 Investment Judgment
 
 Stage 4 combines an investment recommendation, a market-proxy comparison and an assessment of the result we trust least.
@@ -109,7 +119,7 @@ From the repository root, install the dependencies and regenerate the completed 
 
 ```bash
 python3 -m pip install -r requirements.txt
-python3 run_all.py --stage1 --stage2
+python3 run_all.py --stage3 --stage4
 ```
 
 `--stage2` automatically runs Stage 1 first, so `python3 run_all.py --stage2` produces the same research, Stage 1 and Stage 2 artifacts. Existing commands remain available:
@@ -120,7 +130,7 @@ python3 run_all.py --stage1
 python3 -m unittest discover -s tests -v
 ```
 
-The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice exhibits; `--stage2` adds CAPM, SML and GRS. `--stage4` adds the MSCI World market-proxy analysis and comparisons with Stage 2. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
+The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice exhibits; `--stage2` adds CAPM, SML and GRS. `--stage3` adds the FF3 factor analysis and automatically runs Stage 1 and Stage 2 first. Combine `--stage3 --stage4` to reproduce all four stages. `--stage4` adds the MSCI World market-proxy analysis and comparisons with Stage 2. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
 
 The pipeline runs offline from the versioned cached inputs. It does not refit upstream text models or recreate vendor daily panels. To rebuild monthly returns from local daily data before running both stages:
 
@@ -164,6 +174,14 @@ The integrated pipeline was verified with Python 3.12.1 and the versions below. 
 | Matplotlib | 3.10.9 |
 | statsmodels | 0.14.6 |
 
+Stage 3 can also run independently after Stage 2 outputs exist:
+
+```bash
+python3 scripts/stage3.py
+```
+
+The original `python3 artifacts/stage3/run_stage3.py --repo .` command remains supported as a compatibility wrapper. Neither standalone command rebuilds Stage 2; use `python3 run_all.py --stage3` to refresh its dependencies automatically.
+
 ## Project status
 
 | Stage | Status |
@@ -171,7 +189,7 @@ The integrated pipeline was verified with Python 3.12.1 and the versions below. 
 | Data and universe | Complete: 30 capitalization-selected representatives |
 | Stage 1 | Complete: moments, static weights and subsample sensitivity |
 | Stage 2: CAPM | Complete: CAPM table, SML and GRS; integrated into the entry point |
-| Stage 3: factors | Planned; supply at least two additional factors |
+| Stage 3: factors | Complete: CAPM versus FF3, SMB/HML loading tests and alpha comparison; integrated into the entry point |
 | Stage 4: investment judgment | Complete: investment recommendation, market-proxy comparison and limitations |
 
 [Next-stage contracts](docs/04-next-steps.md) · [Team contributions](docs/contributions.md).

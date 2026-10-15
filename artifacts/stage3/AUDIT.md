@@ -15,4 +15,12 @@ Scope: the FE5108 handout's Stage 3 FF3 core only. Mom, RMW, and CMA extensions 
 
 - The published US factors are permitted for a US universe under Track A, but they are proxies and were **not** built from these 30 stocks. Factor construction reference: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html.
 - The `|t| > 2` individual screens are unadjusted for 30 comparisons. Stage 2's joint GRS p-value is about 0.310, so those screens do not establish mispricing. The 30-stock universe was selected retrospectively.
-- This folder is a Stage 3 supplement. The remote repository still needs Stage 3 integrated with its `run_all.py` entry point, and the whole submission still needs the final report, Stage 4, contribution statement, and AI-use acknowledgement. Cached monthly inputs are not the same as a full reconstruction from raw vendor data.
+- Stage 3 is integrated through `run_all.py --stage3`, which rebuilds Stage 1 and Stage 2 first. Use `--stage3 --stage4` for all four stages. Cached monthly inputs are not the same as a full reconstruction from raw vendor data; final submission assembly remains a separate task.
+
+## Integration verification — October 15, 2026
+
+- `python3 run_all.py --stage3 --stage4` completed all four stages from the versioned cached inputs. Stage 3 reproduced the freshly generated Stage 2 CAPM baseline.
+- All eight existing unit tests passed.
+- All 24 changed CSV outputs from the full rerun matched their previously committed numerical values within `rtol=1e-10`, `atol=1e-12`; Stage 2 and Stage 4 environment-only output changes were not retained.
+- The standalone `scripts/stage3.py` command and the original compatibility command both completed. Stage 3 was regenerated against the retained Stage 2 files and all recorded input hashes were verified.
+- The comparison chart was visually checked. Runtime package versions are in `checks.json`.

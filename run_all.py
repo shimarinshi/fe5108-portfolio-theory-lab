@@ -1,4 +1,4 @@
-"""Reproduce research, monthly data and the completed Stage 1 and Stage 2 exhibits."""
+"""Reproduce research, monthly data and the completed Stage 1–4 exhibits."""
 import argparse
 
 from scripts.research import run as run_research
@@ -26,9 +26,13 @@ def main():
         "--stage4", action="store_true",
         help="Build MSCI World CAPM, SML, GRS and comparisons; also rebuild Stage 1 and Stage 2 outputs.",
     )
+    parser.add_argument(
+        "--stage3", action="store_true",
+        help="Build FF3 factor exhibits; also rebuild the required Stage 1 and Stage 2 outputs.",
+    )
     args = parser.parse_args()
 
-    if args.stage4:
+    if args.stage3 or args.stage4:
         args.stage2 = True
 
     run_research(args.daily_root)
@@ -44,6 +48,10 @@ def main():
     if args.stage2:
         from scripts.stage2 import run as run_stage2
         run_stage2()
+
+    if args.stage3:
+        from scripts.stage3 import run as run_stage3
+        run_stage3()
 
     if args.stage4:
         from scripts.stage4 import run as run_stage4
