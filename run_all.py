@@ -1,4 +1,4 @@
-"""Reproduce research, monthly data and the completed Stage 1–4 exhibits."""
+"""Reproduce research, monthly data and the completed Stage 1–4 outputs."""
 import argparse
 
 from scripts.research import run as run_research
@@ -16,11 +16,11 @@ def main():
     )
     parser.add_argument(
         "--stage1", action="store_true",
-        help="Build static Stage 1 exhibits from cached monthly returns and year-end capitalization.",
+        help="Build static Stage 1 outputs from cached monthly returns and year-end capitalization.",
     )
     parser.add_argument(
         "--stage2", action="store_true",
-        help="Build CAPM, SML and GRS exhibits; also rebuild the required Stage 1 outputs.",
+        help="Build CAPM, SML and GRS outputs; also rebuild the required Stage 1 outputs.",
     )
     parser.add_argument(
         "--stage4", action="store_true",
@@ -28,7 +28,7 @@ def main():
     )
     parser.add_argument(
         "--stage3", action="store_true",
-        help="Build FF3 factor exhibits; also rebuild the required Stage 1 and Stage 2 outputs.",
+        help="Build FF3 factor outputs; also rebuild the required Stage 1 and Stage 2 outputs.",
     )
     parser.add_argument(
         "--all", action="store_true",

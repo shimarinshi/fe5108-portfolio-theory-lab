@@ -68,14 +68,14 @@ All 16 Stage 2 artifacts are saved under `artifacts/stage2/`:
 | Files | Content |
 |---|---|
 | `capm_input_monthly.csv`, `input_checks.json` | Aligned data and source metadata |
-| `capm_results.csv`, `exhibit_2a.csv` | Full CAPM results and Exhibit 2a |
+| `capm_results.csv`, `capm_summary.csv` | Full CAPM estimates and presentation summary |
 | `capm_residuals.csv`, `capm_fitted_values.csv` | Residuals and fitted values for all stocks |
 | `data_audit_examples.csv`, `capm_checks.json` | Audit examples and regression method record |
-| `sml_scatter.png`, `sml_points.csv`, `sml_lines.csv` | Exhibit 2b and the data used to draw it |
+| `sml_scatter.png`, `sml_points.csv`, `sml_lines.csv` | Security Market Line chart and plotting data |
 | `sml_summary.csv`, `sml_checks.json` | Theoretical versus fitted intercept and slope, and method record |
 | `grs_results.csv`, `grs_residual_covariance.csv`, `grs_checks.json` | Joint alpha test, residual covariance and method record |
 
-Analytical returns and alphas remain monthly decimals in CSVs, except the explicitly named `alpha_monthly_percent` column in `exhibit_2a.csv`. The SML figure formats returns as percentages. Its fitted line is an equally weighted cross-sectional OLS of mean stock excess returns on estimated betas; the theoretical line passes through the origin with slope equal to mean market excess return.
+Analytical returns and alphas remain monthly decimals in CSVs, except the explicitly named `alpha_monthly_percent` column in `capm_summary.csv`. The SML figure formats returns as percentages. Its fitted line is an equally weighted cross-sectional OLS of mean stock excess returns on estimated betas; the theoretical line passes through the origin with slope equal to mean market excess return.
 
 The classical GRS test uses residual covariance `E.T @ E / T` and market variance with `ddof=0`. For `T=108`, `N=30` and one factor, the reference distribution is `F(30, 77)`. The [GRS paper](https://www2.itc.kansai-u.ac.jp/~koji_ota/GRS_test/GibbonsRossShanken_1989_Econometrica.pdf) gives the finite-sample test under conditionally joint-normal residuals with constant nonsingular covariance and independence across time. The joint test uses classical covariance rather than the HAC covariance from the individual regressions.
 
@@ -89,7 +89,7 @@ The program verifies RF alignment and reproduces Stage 2 CAPM alphas, OLS t-stat
 
 Absolute alpha falls for 13 of 30 stocks; mean absolute monthly alpha changes from 0.594% to 0.574%. Among the two stocks crossing the descriptive CAPM `|OLS t(alpha)| > 2` screen, MSFT continues to cross it under FF3 while WMT does not. These unadjusted screens do not establish mispricing or prove that the additional factors explain abnormal returns.
 
-See the [Stage 3 report](artifacts/stage3/README.md), [factor definitions](artifacts/stage3/exhibit_3a_factor_construction.md), [30-stock comparison table](artifacts/stage3/exhibit_3b_alpha_before_after.csv), [comparison chart](artifacts/stage3/exhibit_3b_alpha_before_after.png), [verdict](artifacts/stage3/exhibit_3c_verdict.md), and [full estimates](artifacts/stage3/all_30_model_results.csv). `checks.json` records input hashes, sample checks and package versions.
+See the [Stage 3 report](artifacts/stage3/README.md), [factor definitions](artifacts/stage3/factor_definitions.md), [30-stock comparison table](artifacts/stage3/alpha_comparison.csv), [comparison chart](artifacts/stage3/alpha_comparison.png), [verdict](artifacts/stage3/factor_interpretation.md), and [full estimates](artifacts/stage3/all_30_model_results.csv). `checks.json` records input hashes, sample checks and package versions.
 
 ## Stage 4 Investment Judgment
 
@@ -97,7 +97,7 @@ Stage 4 combines an investment recommendation, a market-proxy comparison and an 
 
 ### Investment recommendation
 
-We recommend a constrained allocation between value weighting and the estimated tangency portfolio. The tangency portfolio's higher in-sample Sharpe and stronger 2026 tracking return support retaining active allocations, but leverage, estimation sensitivity and implementation costs limit the case for holding it without constraints. See [the full recommendation](artifacts/stage4/stage_4a.md).
+We recommend a constrained allocation between value weighting and the estimated tangency portfolio. The tangency portfolio's higher in-sample Sharpe and stronger 2026 tracking return support retaining active allocations, but leverage, estimation sensitivity and implementation costs limit the case for holding it without constraints. See [the full recommendation](artifacts/stage4/investment_recommendation.md).
 
 ### Market-proxy comparison
 
@@ -107,11 +107,32 @@ Mean absolute changes are **0.0951 percentage points per month for alpha** and *
 
 ### Result we trust least
 
-We are least confident that the tangency portfolio's in-sample Sharpe of **2.197** represents future achievable performance. Weights were optimized and evaluated on the same sample, while the 2026 tracking evidence retains retrospective-selection and cost limitations. See [the limitations assessment](artifacts/stage4/stage_4c.md).
+We are least confident that the tangency portfolio's in-sample Sharpe of **2.197** represents future achievable performance. Weights were optimized and evaluated on the same sample, while the 2026 tracking evidence retains retrospective-selection and cost limitations. See [the limitations assessment](artifacts/stage4/limitations.md).
 
 ### Outputs
 
 Results are saved to `artifacts/stage4/`, including CAPM, SML and GRS outputs. Main comparisons are available in [`alpha_beta_comparison.csv`](artifacts/stage4/alpha_beta_comparison.csv), [`grs_comparison.csv`](artifacts/stage4/grs_comparison.csv) and [`comparison_report.md`](artifacts/stage4/comparison_report.md).
+
+## Analysis guide and assignment mapping
+
+Files use descriptive `snake_case` names. Each stage directory provides context; assignment numbers are a navigation aid rather than file names. Tables use decimal returns unless a column explicitly specifies percent units.
+
+| Analysis | Main outputs | Assignment requirement |
+|---|---|---|
+| Universe summary | `stage1/summary_statistics.csv` | 1a |
+| Tangency versus value weights | `stage1/portfolio_weights.csv`, `stage1/weights_comparison.png` | 1b |
+| Estimation sensitivity | `stage1/subsample_stability.csv`, `stage1/subsample_weights.png`, Stage 1 report | 1c |
+| CAPM estimates | `stage2/capm_summary.csv`, `stage2/capm_results.csv` | 2a |
+| Security Market Line | `stage2/sml_scatter.png`, `stage2/sml_summary.csv` | 2b, 2d |
+| Joint alpha assessment | `stage2/grs_results.csv` and interpretation above | 2c |
+| Factor definitions | `stage3/factor_definitions.md` | 3a |
+| CAPM versus FF3 alphas | `stage3/alpha_comparison.csv`, `stage3/alpha_comparison.png` | 3b |
+| Factor interpretation | `stage3/factor_interpretation.md` | 3c |
+| Investment recommendation | `stage4/investment_recommendation.md` | Stage 4: recommendation |
+| Alternative market proxy | `stage4/comparison_report.md`, `stage4/alpha_beta_comparison.csv`, `stage4/grs_comparison.csv` | Stage 4: Roll's critique |
+| Limitations | `stage4/limitations.md` | Stage 4: intellectual honesty |
+
+All paths in this table are relative to `artifacts/`. Stage 4 also saves `capm_summary.csv` using the same naming and units as Stage 2, with MSCI World as the market proxy.
 
 ## Reproduce
 
@@ -130,7 +151,7 @@ python3 run_all.py --stage1
 python3 -m unittest discover -s tests -v
 ```
 
-The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice exhibits; `--stage2` adds CAPM, SML and GRS. `--stage3` adds the FF3 factor analysis and automatically runs Stage 1 and Stage 2 first. Use `--all` to reproduce all four course stages from cached inputs; `--stage3 --stage4` remains equivalent. `--all` does not require local daily panels or run the separate research-branch experiments. `--stage4` adds the MSCI World market-proxy analysis and comparisons with Stage 2. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
+The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice outputs; `--stage2` adds CAPM, SML and GRS. `--stage3` adds the FF3 factor analysis and automatically runs Stage 1 and Stage 2 first. Use `--all` to reproduce all four course stages from cached inputs; `--stage3 --stage4` remains equivalent. `--all` does not require local daily panels or run the separate research-branch experiments. `--stage4` adds the MSCI World market-proxy analysis and comparisons with Stage 2. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
 
 The pipeline runs offline from the versioned cached inputs. It does not refit upstream text models or recreate vendor daily panels. To rebuild monthly returns from local daily data before running both stages:
 
@@ -138,7 +159,7 @@ The pipeline runs offline from the versioned cached inputs. It does not refit up
 python3 run_all.py --daily-root ./tbic_returns --monthly --stage1 --stage2
 ```
 
-The daily `tbic_returns` inputs must be supplied locally for this command; they are excluded from Git. The cached monthly inputs suffice to regenerate the Stage 1 and Stage 2 exhibits. The historical-cap inputs are frozen, not downloaded by the main program. [Provenance](artifacts/inputs/provenance.json) and generated verification files record hashes. Hashes detect changed inputs and do not independently certify vendor accuracy.
+The daily `tbic_returns` inputs must be supplied locally for this command; they are excluded from Git. The cached monthly inputs suffice to regenerate the Stage 1 and Stage 2 outputs. The historical-cap inputs are frozen, not downloaded by the main program. [Provenance](artifacts/inputs/provenance.json) and generated verification files record hashes. Hashes detect changed inputs and do not independently certify vendor accuracy.
 
 If Stage 1 outputs already exist, Stage 2 can also run directly:
 

@@ -311,13 +311,13 @@ def _run(root=None):
 
     capm_results = capm_results.join(asset_info[["company_name"]], validate="one_to_one").loc[tickers]
 
-    exhibit_2a = capm_results[[
+    capm_summary = capm_results[[
         "company_name", "beta", "alpha_monthly", "alpha_t_ols", "alpha_t_hac3", "r_squared"
     ]].copy()
 
-    exhibit_2a["alpha_monthly"] *= 100
+    capm_summary["alpha_monthly"] *= 100
 
-    exhibit_2a = exhibit_2a.rename(columns={"alpha_monthly": "alpha_monthly_percent"})
+    capm_summary = capm_summary.rename(columns={"alpha_monthly": "alpha_monthly_percent"})
 
     print(f"Completed CAPM regressions for {len(capm_results)} stocks; raw alphas remain monthly decimals.")
 
@@ -345,7 +345,7 @@ def _run(root=None):
 
     capm_results.to_csv(OUT_DIR / "capm_results.csv", index_label="ticker")
 
-    exhibit_2a.to_csv(OUT_DIR / "exhibit_2a.csv", index_label="ticker")
+    capm_summary.to_csv(OUT_DIR / "capm_summary.csv", index_label="ticker")
 
     capm_residuals.to_csv(OUT_DIR / "capm_residuals.csv", index_label="month")
 
@@ -357,7 +357,7 @@ def _run(root=None):
         "model": "Ri_minus_Rf = alpha + beta * Mkt_minus_Rf + residual",
         "sample_start": str(Y.index[0]), "sample_end": str(Y.index[-1]),
         "months": len(Y), "assets": len(tickers), "tickers": tickers,
-        "alpha_units": "monthly decimals; exhibit_2a.csv uses monthly percent",
+        "alpha_units": "monthly decimals; capm_summary.csv uses monthly percent",
         "standard_errors_baseline": "OLS nonrobust, Student t, df = T - 2",
         "standard_errors_robustness": {
             "method": "HAC", "maxlags": HAC_LAGS, "kernel": "bartlett",
@@ -382,7 +382,7 @@ def _run(root=None):
         json.dumps(capm_checks, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 
-    print("Saved CAPM results, exhibit, residuals, fitted values, audit table and method record to:", OUT_DIR)
+    print("Saved CAPM results, summary, residuals, fitted values, audit table and method record to:", OUT_DIR)
 
     market_premium = float(market.mean())
 

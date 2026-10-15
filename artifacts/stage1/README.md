@@ -242,7 +242,7 @@ All estimation uses monthly decimal returns. The arithmetic mean is mu_i = sum(r
 </details>
 
 
-## Exhibit 1a — Full-sample summary statistics
+## Full-sample summary statistics
 
 Every stock has 108 observations. [Download complete statistics](summary_statistics.csv).
 
@@ -279,7 +279,7 @@ Every stock has 108 observations. [Download complete statistics](summary_statist
 | SLB | 0.31% | 12.47% | -50.20% | 44.93% |
 | DHI | 2.20% | 10.60% | -36.17% | 38.88% |
 
-## Exhibit 1b — Full sample: 108 months
+## Portfolio weights — Full sample: 108 months
 
 January 2017–December 2025. Both columns sum to 100% before rounding. A negative weight is a short position; the value-weight column is identical across windows. [Download this table](weights_108m.csv).
 
@@ -322,7 +322,7 @@ January 2017–December 2025. Both columns sum to 100% before rounding. A negati
 *Tangency gross exposure: 538.90%; value portfolio: 100% long-only.*
 
 
-## Exhibit 1c — Subsample: 96 months
+## Portfolio weights — Subsample: 96 months
 
 January 2018–December 2025. Both columns sum to 100% before rounding. A negative weight is a short position; the value-weight column is identical across windows. [Download this table](weights_96m.csv).
 
@@ -359,7 +359,7 @@ January 2018–December 2025. Both columns sum to 100% before rounding. A negati
 | SLB | -23.03% | 0.37% |
 | DHI | -2.81% | 0.27% |
 
-## Exhibit 1c — Subsample: 84 months
+## Portfolio weights — Subsample: 84 months
 
 January 2019–December 2025. Both columns sum to 100% before rounding. A negative weight is a short position; the value-weight column is identical across windows. [Download this table](weights_84m.csv).
 
@@ -425,4 +425,4 @@ The 2024 text universe and its capitalization ranks are applied retrospectively 
 
 ## Reproduction
 
-Run `python run_all.py --stage1` from the repository with the existing requirements installed. Existing monthly inputs and the year-end snapshot are reused; no credentials or network are required. Inputs and original market-cap values are not overwritten. This implementation covers the three specified Stage 1 exhibits; constrained or shrinkage portfolios can be added as a further implementation study.
+Run `python run_all.py --stage1` from the repository with the existing requirements installed. Existing monthly inputs and the year-end snapshot are reused; no credentials or network are required. Inputs and original market-cap values are not overwritten. This implementation covers the three specified Stage 1 outputs; constrained or shrinkage portfolios can be added as a further implementation study.

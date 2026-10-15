@@ -40,13 +40,13 @@
   "empirical_method": "Equal-weight cross-sectional OLS with intercept",
   "theoretical_intercept": 0.0,
   "theoretical_slope": 0.009043666711256136,
-  "empirical_intercept": 0.0028194300534468263,
-  "empirical_slope": 0.010748274177833046,
-  "slope_minus_theory": 0.0017046074665769094,
-  "cross_sectional_r_squared": 0.24942192072583114,
+  "empirical_intercept": 0.0028194300534468346,
+  "empirical_slope": 0.010748274177833044,
+  "slope_minus_theory": 0.0017046074665769077,
+  "cross_sectional_r_squared": 0.24942192072583103,
   "observed_beta_range": [
-    0.3547860208098414,
-    1.9945278872607168
+    0.35478602080984145,
+    1.9945278872607166
   ],
   "labelled_tickers": [
     "TSLA",
@@ -63,13 +63,13 @@
   ],
   "interpretation": "Descriptive SML; estimated beta and cross-asset dependence prevent treating ordinary cross-sectional p-values as a formal CAPM pricing test. The intercept at beta=0 can be an extrapolation.",
   "inputs_sha256": {
-    "capm_results.csv": "ee5c152b91bf531a2b9a4c9872797d64652d6f768fde3d63982d998a74692c99",
-    "capm_input_monthly.csv": "cfd7764c9b951cae8f7574ab6124aff3a952c9e105c1c0c65ce594ae8d8e43f2"
+    "capm_results.csv": "5bcd0b42195dad648d62ad92263eda40d255bd4bda96fba938c909ae156852fa",
+    "capm_input_monthly.csv": "a058c1b3e7f068091904102b2dd32772c555817e2ea2a3d5c03acb5a74cb40b3"
   },
   "packages": {
-    "numpy": "2.3.5",
-    "pandas": "3.0.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
     "statsmodels": "0.14.6",
-    "matplotlib": "3.11.2"
+    "matplotlib": "3.11.1"
   }
 }

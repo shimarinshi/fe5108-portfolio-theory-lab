@@ -19,12 +19,12 @@ def expand_report(report,out,weights):
     summary=pd.read_csv(out/'summary_statistics.csv',index_col=0)
     summary=summary[['mean_monthly_return','monthly_volatility','min_monthly_return','max_monthly_return']]
     summary.columns=['Monthly mean','Monthly volatility','Minimum month','Maximum month']
-    sections.append('## Exhibit 1a — Full-sample summary statistics\n\nEvery stock has 108 observations. [Download complete statistics](summary_statistics.csv).\n\n'+table(summary,lambda x:f'{100*x:.2f}%'))
+    sections.append('## Full-sample summary statistics\n\nEvery stock has 108 observations. [Download complete statistics](summary_statistics.csv).\n\n'+table(summary,lambda x:f'{100*x:.2f}%'))
     for n,start in [(108,'January 2017'),(96,'January 2018'),(84,'January 2019')]:
         frame=weights[[f'tangency_{n}m','value_weight_2025_12_31']].copy()
         frame.columns=['Tangency weight','Value weight (2025-12-31)']
         frame.to_csv(out/f'weights_{n}m.csv',index_label='ticker')
-        sections.append(f'## {"Exhibit 1b — Full sample" if n==108 else "Exhibit 1c — Subsample"}: {n} months\n\n{start}–December 2025. Both columns sum to 100% before rounding. A negative weight is a short position; the value-weight column is identical across windows. [Download this table](weights_{n}m.csv).\n\n'+table(frame,lambda x:f'{100*x:.2f}%'))
+        sections.append(f'## {"Portfolio weights — Full sample" if n==108 else "Portfolio weights — Subsample"}: {n} months\n\n{start}–December 2025. Both columns sum to 100% before rounding. A negative weight is a short position; the value-weight column is identical across windows. [Download this table](weights_{n}m.csv).\n\n'+table(frame,lambda x:f'{100*x:.2f}%'))
         if n==108:sections.append(f'\n![Tangency versus value weights](weights_comparison.png)\n\n*Tangency gross exposure: {abs(weights.tangency_108m).sum():.2%}; value portfolio: 100% long-only.*\n')
     a=weights.tangency_108m
     rows=[]
@@ -36,7 +36,7 @@ def expand_report(report,out,weights):
     for row in rows:
         sections.append(f"- **{row['window_months']} months:** cross-stock weight correlation {row['weight_pearson_correlation_vs_108m']:.3f}; {row['same_sign_count']}/30 positions retain their sign; average absolute change {row['mean_absolute_change_pp']:.2f} percentage points; largest change {row['maximum_absolute_change_pp']:.2f} percentage points.")
     sections.append('\nThese highly overlapping windows are not independent validation samples. Weight correlation and leverage changes describe sensitivity to the estimation window. The 84-month result is supplementary; the 108- and 96-month windows meet the course minimum.\n\n![Subsample comparison](subsample_weights.png)\n')
-    start=report.index('## Required exhibits');end=report.index('## Interpretation')
+    start=report.index('## Analysis outputs');end=report.index('## Interpretation')
     report=report[:start]+'\n\n'.join(sections)+'\n\n'+report[end:]
     report=report.replace('See `market_cap_audit.md`','See [the capitalization audit](market_cap_audit.md)')
     return report

@@ -1,4 +1,4 @@
-"""Static Stage 1 exhibits. Run from the repository; no network or credentials."""
+"""Static Stage 1 outputs. Run from the repository; no network or credentials."""
 from pathlib import Path
 import json, hashlib
 import numpy as np
@@ -81,7 +81,7 @@ The 30-asset universe has 108 complete monthly total-return observations from Ja
 
 Estimate the arithmetic monthly mean vector and unbiased sample covariance of total returns (ddof=1). Subtract the sample mean monthly risk-free rate to obtain the mean excess-return vector. Solve Sigma z = mu_e and normalize w = z / sum(z). Short positions are permitted in the textbook baseline. Market-value weights equal each company's original Massive capitalization divided by the total of the same 30 companies. Company-level capitalization includes convertible ordinary classes where applicable; it is not a float-adjusted index.
 
-## Required exhibits
+## Analysis outputs
 
 - 1a: `summary_statistics.csv`, including monthly means, volatilities and observation counts. Returns and weights in CSVs are decimals, not percentages. Arithmetic annualization is 12 times the monthly mean; volatility uses square root of 12.
 - 1b: `weights_comparison.png` and `portfolio_weights.csv`. **Takeaway:** the estimated tangency portfolio has gross exposure of {main['gross_exposure']:.2f} times net capital, whereas the value portfolio is long-only.
@@ -101,7 +101,7 @@ The 2024 text universe and its capitalization ranks are applied retrospectively 
 
 ## Reproduction
 
-Run `python run_all.py --stage1` from the repository with the existing requirements installed. Existing monthly inputs and the year-end snapshot are reused; no credentials or network are required. Inputs and original market-cap values are not overwritten. This implementation covers the three specified Stage 1 exhibits; constrained or shrinkage portfolios can be added as a further implementation study.
+Run `python run_all.py --stage1` from the repository with the existing requirements installed. Existing monthly inputs and the year-end snapshot are reused; no credentials or network are required. Inputs and original market-cap values are not overwritten. This implementation covers the three specified Stage 1 outputs; constrained or shrinkage portfolios can be added as a further implementation study.
 '''
     from scripts.stage1_reporting import expand_report
     report = expand_report(report, out, weights)

@@ -40,10 +40,10 @@
     "months": 108,
     "assets": 30,
     "factors": 1,
-    "grs_statistic": 1.4116751886437133,
+    "grs_statistic": 1.4116751886437122,
     "df1": 30,
     "df2": 77,
-    "p_value": 0.11540079036108328,
+    "p_value": 0.11540079036108342,
     "significance_level": 0.05,
     "critical_value": 1.6072683247555866,
     "reject_joint_zero_alpha": false
@@ -51,7 +51,7 @@
   "residual_covariance": "E.T @ E / T",
   "market_variance": "Variance of market excess returns with ddof=0",
   "formula": "(T-N-K)/N * (alpha.T @ solve(Sigma_e, alpha)) / (1 + mean_market**2 / var_market)",
-  "residual_covariance_condition_number": 61.81478812738724,
+  "residual_covariance_condition_number": 61.81478812738729,
   "checks_passed": [
     "common_sample_and_asset_order",
     "valid_F_degrees_of_freedom",
@@ -61,14 +61,14 @@
   "assumptions": "Conditionally joint-normal residuals, constant nonsingular covariance, and independence across time",
   "inference_note": "Classical finite-sample F reference; this test does not use HAC covariance",
   "inputs_sha256": {
-    "artifacts\\stage4\\msci_world\\capm_input_monthly.csv": "cfd7764c9b951cae8f7574ab6124aff3a952c9e105c1c0c65ce594ae8d8e43f2",
-    "artifacts\\stage4\\msci_world\\capm_results.csv": "ee5c152b91bf531a2b9a4c9872797d64652d6f768fde3d63982d998a74692c99",
-    "artifacts\\stage4\\msci_world\\capm_residuals.csv": "562bb72ea9ffd04ea7e2c0b5c469cc6f2f7f632efed592a9fe2ee405b9cf3397",
-    "artifacts\\stage4\\msci_world\\capm_checks.json": "a3d684903999950e556746586454f8f313f703960c4e4b698a1758b9a8d9763f"
+    "artifacts/stage4/capm_input_monthly.csv": "cfd7764c9b951cae8f7574ab6124aff3a952c9e105c1c0c65ce594ae8d8e43f2",
+    "artifacts/stage4/capm_results.csv": "ee5c152b91bf531a2b9a4c9872797d64652d6f768fde3d63982d998a74692c99",
+    "artifacts/stage4/capm_residuals.csv": "562bb72ea9ffd04ea7e2c0b5c469cc6f2f7f632efed592a9fe2ee405b9cf3397",
+    "artifacts/stage4/capm_checks.json": "b7d2eee0958c04126bedd8d9e134c3fd3c58c13accc50aeea3387131a3f968d2"
   },
   "packages": {
-    "numpy": "2.3.5",
-    "pandas": "3.0.1",
-    "scipy": "1.18.1"
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "scipy": "1.18.0"
   }
 }

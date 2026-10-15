@@ -2,10 +2,10 @@
   "sample": "2017-01 to 2025-12",
   "months": 108,
   "stocks": 30,
-  "mean_absolute_delta_alpha_percentage_points_per_month": 0.09512269709710024,
-  "max_absolute_delta_alpha_percentage_points_per_month": 0.3701766171552039,
+  "mean_absolute_delta_alpha_percentage_points_per_month": 0.0951226970970991,
+  "max_absolute_delta_alpha_percentage_points_per_month": 0.3701766171551938,
   "largest_alpha_change_ticker": "TSLA",
-  "mean_absolute_delta_beta": 0.08083694162588068,
+  "mean_absolute_delta_beta": 0.08083694162588066,
   "max_absolute_delta_beta": 0.19146592551452812,
   "largest_beta_change_ticker": "SCCO",
   "baseline_refit_verified": true,
@@ -13,9 +13,9 @@
   "difference_note": "Changes in significance are not significance tests of coefficient differences.",
   "msci_convention": "USD net dividend reinvestment; not net of trading costs",
   "baseline_sha256": {
-    "capm_input_monthly.csv": "517a73d07ae6c73111ec881d30a2d80cd858a81e2024616b94b391d11ef25ef3",
-    "capm_results.csv": "6fb4cc0d650ae478a09be49df774aa994f91b85deb1b78bb5a1a062955faaf39",
-    "grs_results.csv": "d63093183a64d9b60955259c33488bd7f1e887b191dccd9a139e0237c5f08deb"
+    "capm_input_monthly.csv": "4d5c8efcb9a3047c886386646a23c688f70b9a8a670d040c501a7631789cec66",
+    "capm_results.csv": "0ef02ba9cfb11a3fc1ec8972ff8b94fe69531d7752ff452f5890769271f1619d",
+    "grs_results.csv": "7e7aea77e75296ee47d9ff08baebad44f6f2f4d2a0d4133fa837958a35ced7e0"
   },
   "significant_alpha_ols_french": [
     "MSFT",

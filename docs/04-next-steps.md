@@ -6,7 +6,7 @@ The value-weight comparison uses only December 31, 2025 company market caps; Sta
 
 For CAPM, agree on and document the market proxy. If using a portfolio constructed from these stocks, explicitly define its weighting/rebalancing and its limitations as a market proxy. If using an external market series, obtain aligned monthly total returns and the same RF convention. Factor analysis needs at least two additional aligned factor series. Those inputs are not supplied by Stage 1 alone.
 
-A future monthly rebalanced capitalization strategy would require prior-month-end caps, including December 2016 for January 2017. It is separate from the current static course exhibit. Full-sample fitted weights and retrospective universe selection are not a forward-investable historical backtest.
+A future monthly rebalanced capitalization strategy would require prior-month-end caps, including December 2016 for January 2017. It is separate from the current static portfolio comparison. Full-sample fitted weights and retrospective universe selection are not a forward-investable historical backtest.
 
 ## Implemented stage dependencies
 

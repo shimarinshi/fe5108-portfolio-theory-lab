@@ -2,7 +2,7 @@
 
 This is an in-sample asset-pricing regression, not a trading backtest.  It
 reads the group's cached inputs and writes
-the three required Stage 3 exhibits into --out.
+the three required Stage 3 outputs into --out.
 """
 
 from __future__ import annotations
@@ -141,13 +141,13 @@ def fit_models(tickers, names, excess, ff3, stage2):
     return result
 
 
-def write_exhibits(out: Path, result: pd.DataFrame, grs_p: float):
+def write_outputs(out: Path, result: pd.DataFrame, grs_p: float):
     """4. 生成手册所需 3a 因子说明、3b 对比表/图、3c 异常判断。"""
     out.mkdir(parents=True, exist_ok=True)
     result.to_csv(out / "all_30_model_results.csv", index_label="ticker")
 
-    (out / "exhibit_3a_factor_construction.md").write_text(
-        """# Exhibit 3a — Factor construction and source
+    (out / "factor_definitions.md").write_text(
+        """# Factor definitions and sources
 
 **Market excess return.** The existing Stage 2 market proxy is the monthly return on the broad US equity market minus the one-month risk-free rate. Each stock's dependent variable is its monthly total return minus the same RF. The cached factor file is already in decimal monthly returns; no second RF subtraction or percent conversion is performed.
 
@@ -163,7 +163,7 @@ def write_exhibits(out: Path, result: pd.DataFrame, grs_p: float):
                     "beta_smb", "beta_hml", "joint_smb_hml_p"]].copy()
     for col in ("capm_alpha_monthly", "ff3_alpha_monthly"):
         table[col.replace("monthly", "percent_per_month")] = 100 * table.pop(col)
-    table.to_csv(out / "exhibit_3b_alpha_before_after.csv", index_label="ticker")
+    table.to_csv(out / "alpha_comparison.csv", index_label="ticker")
 
     # 30 股逐行显示；零线用于辨认 alpha 方向。图与表都是样本内估计。
     plot = table.sort_values("capm_alpha_percent_per_month")
@@ -172,7 +172,7 @@ def write_exhibits(out: Path, result: pd.DataFrame, grs_p: float):
     ax.scatter(plot["capm_alpha_percent_per_month"], y - .15, label="CAPM", s=27)
     ax.scatter(plot["ff3_alpha_percent_per_month"], y + .15, label="CAPM + SMB + HML", s=27)
     ax.set(yticks=y, yticklabels=plot.index, xlabel="Monthly alpha (%)",
-           title="Exhibit 3b — Same 30 stocks and 108 months")
+           title="CAPM versus FF3 alphas — 30 stocks, 108 months")
     ax.axvline(0, color="black", linewidth=.8)
     ax.grid(axis="x", alpha=.2)
     ax.legend(loc="lower right")
@@ -184,12 +184,12 @@ def write_exhibits(out: Path, result: pd.DataFrame, grs_p: float):
              f"{remaining} still cross |t| > 2 under FF3. "
              "Dots are in-sample estimates, not confidence intervals.", fontsize=9)
     fig.tight_layout(rect=(0, .045, 1, 1))
-    fig.savefig(out / "exhibit_3b_alpha_before_after.png", dpi=180)
+    fig.savefig(out / "alpha_comparison.png", dpi=180)
     plt.close(fig)
 
     flagged = result[result.capm_alpha_t.abs() > 2]
     lines = [
-        "# Exhibit 3c — Which Stage 2 alpha screens remain?", "",
+        "# Factor interpretation — Which CAPM alpha screens remain?", "",
         "Both models use the same 30 stocks and 108 months. The |OLS t(alpha)| > 2 rule is a descriptive stock-level screen, not a declaration of mispricing.",
         f"Stage 2's joint GRS test has p = {grs_p:.3f}; it does not reject all-zero CAPM alphas at 5%. Individual screens therefore require caution.", "",
         "| Stock | CAPM alpha (%/month), t | FF3 alpha (%/month), t | SMB beta | HML beta | Joint SMB/HML p | Verdict |",
@@ -222,7 +222,7 @@ def write_exhibits(out: Path, result: pd.DataFrame, grs_p: float):
         "that an abnormal return has been explained. The universe was selected retrospectively; "
         "the market and published factors are proxies. This is not a trading backtest.", "",
     ]
-    (out / "exhibit_3c_verdict.md").write_text("\n".join(lines), encoding="utf-8")
+    (out / "factor_interpretation.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -233,7 +233,7 @@ def run(repo: Path = ROOT, out: Path | None = None) -> None:
     out = Path(out).expanduser().resolve() if out is not None else repo / "artifacts/stage3"
     paths, tickers, names, excess, ff3, stage2, grs_p = load_inputs(repo)
     result = fit_models(tickers, names, excess, ff3, stage2)
-    write_exhibits(out, result, grs_p)
+    write_outputs(out, result, grs_p)
     # 5. 记录样本、输入哈希和软件版本，便于他人检查是否使用相同数据。
     checks = {
         "sample": [str(MONTHS[0]), str(MONTHS[-1])], "months": len(MONTHS),
@@ -246,7 +246,7 @@ def run(repo: Path = ROOT, out: Path | None = None) -> None:
                      "statsmodels": statsmodels.__version__, "matplotlib": matplotlib.__version__},
     }
     (out / "checks.json").write_text(json.dumps(checks, indent=2) + "\n", encoding="utf-8")
-    print(f"Stage 3 complete: {len(tickers)} stocks, {len(MONTHS)} months. Exhibits: {out}")
+    print(f"Stage 3 complete: {len(tickers)} stocks, {len(MONTHS)} months. Outputs: {out}")
 
 
 def main() -> None:

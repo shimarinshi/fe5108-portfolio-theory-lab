@@ -6,7 +6,7 @@ Complete this record with actual team contributions before submission. Do not in
 |---|---|---|---|
 | To be completed | | | |
 
-The course submission should cover all four stages, include the required exhibits, a reproducible entry point, and a signed contribution statement. The unified entry point `python3 run_all.py --all` reproduces the data/universe checkpoint and the analytical exhibits for Stages 1–4 from versioned cached inputs. It does not regenerate the separate 2026 research-branch experiments or assemble the final report. Team members must supply their actual contributions and signatures before submission.
+The course submission should cover all four stages, include the required outputs, a reproducible entry point, and a signed contribution statement. The unified entry point `python3 run_all.py --all` reproduces the data/universe checkpoint and the analytical outputs for Stages 1–4 from versioned cached inputs. It does not regenerate the separate 2026 research-branch experiments or assemble the final report. Team members must supply their actual contributions and signatures before submission.
 
 Suggested AI acknowledgment, to be updated to match actual use:
 

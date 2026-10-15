@@ -1,4 +1,4 @@
-# Exhibit 3a — Factor construction and source
+# Factor definitions and sources
 
 **Market excess return.** The existing Stage 2 market proxy is the monthly return on the broad US equity market minus the one-month risk-free rate. Each stock's dependent variable is its monthly total return minus the same RF. The cached factor file is already in decimal monthly returns; no second RF subtraction or percent conversion is performed.
 

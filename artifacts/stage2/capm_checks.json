@@ -36,7 +36,7 @@
     "SLB",
     "DHI"
   ],
-  "alpha_units": "monthly decimals; exhibit_2a.csv uses monthly percent",
+  "alpha_units": "monthly decimals; capm_summary.csv uses monthly percent",
   "standard_errors_baseline": "OLS nonrobust, Student t, df = T - 2",
   "standard_errors_robustness": {
     "method": "HAC",
@@ -64,7 +64,7 @@
   "stage1_means_sha256": "15ba714205fe253ded1ca3fc321f3b4f9a491ec6a31f1adf339de4935c90cdb3",
   "packages": {
     "numpy": "2.4.6",
-    "pandas": "3.0.3",
+    "pandas": "3.0.5",
     "statsmodels": "0.14.6"
   }
 }

@@ -1,4 +1,4 @@
-# Exhibit 3c — Which Stage 2 alpha screens remain?
+# Factor interpretation — Which CAPM alpha screens remain?
 
 Both models use the same 30 stocks and 108 months. The |OLS t(alpha)| > 2 rule is a descriptive stock-level screen, not a declaration of mispricing.
 Stage 2's joint GRS test has p = 0.310; it does not reject all-zero CAPM alphas at 5%. Individual screens therefore require caution.

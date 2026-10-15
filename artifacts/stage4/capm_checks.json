@@ -36,7 +36,7 @@
     "SLB",
     "DHI"
   ],
-  "alpha_units": "monthly decimals; exhibit_2a.csv uses monthly percent",
+  "alpha_units": "monthly decimals; capm_summary.csv uses monthly percent",
   "standard_errors_baseline": "OLS nonrobust, Student t, df = T - 2",
   "standard_errors_robustness": {
     "method": "HAC",
@@ -55,17 +55,17 @@
     "SML_mean_identity"
   ],
   "inputs_sha256": {
-    "artifacts\\results\\selected_universe.csv": "3fd3c0e9857ad1ec0fbd5f6b30544881862b75361dd2e85b000b31e644752f25",
-    "artifacts\\monthly\\monthly_total_returns.csv": "60a949c17a05a43f10f9046dbee5b00f1cd61f4e7504e4e61c9ab83792c57b6a",
-    "artifacts\\monthly\\monthly_excess_returns.csv": "8a223fe1e0ae722c2055adde51b34db0da7d84c9e3392a394e6cd2aa93ebd118",
-    "artifacts\\monthly\\risk_free_monthly.csv": "ab249df8d9674566b66f7192fac803b8ac0d40aba00ad619b3dcc7745e69b054",
-    "artifacts\\inputs\\ff3_monthly.csv": "76e8197e3565cfcddca04223995eff390be5451a9f805529ce7837fb8bb602ed",
-    "artifacts\\monthly\\msci_world_monthly.csv": "4e98c5521a657a289376fe0623c40289e3ae592dbbb2714cf122503c0e86eaab"
+    "artifacts/results/selected_universe.csv": "cf127523a83ac56dafbb5d1c91133c2bd464dabd673f38d99d18a4de4ff90dd3",
+    "artifacts/monthly/monthly_total_returns.csv": "60a949c17a05a43f10f9046dbee5b00f1cd61f4e7504e4e61c9ab83792c57b6a",
+    "artifacts/monthly/monthly_excess_returns.csv": "8a223fe1e0ae722c2055adde51b34db0da7d84c9e3392a394e6cd2aa93ebd118",
+    "artifacts/monthly/risk_free_monthly.csv": "ab249df8d9674566b66f7192fac803b8ac0d40aba00ad619b3dcc7745e69b054",
+    "artifacts/inputs/ff3_monthly.csv": "52dc4ba3acbd3843966bd38c52b9036ea86d75ed5100d766002c81879e2ab15e",
+    "artifacts/monthly/msci_world_monthly.csv": "4e98c5521a657a289376fe0623c40289e3ae592dbbb2714cf122503c0e86eaab"
   },
-  "stage1_means_sha256": "280770440c8a9207582b583017ddfbb8d92dfc7f3453905ddc57e373fabd79a6",
+  "stage1_means_sha256": "15ba714205fe253ded1ca3fc321f3b4f9a491ec6a31f1adf339de4935c90cdb3",
   "packages": {
-    "numpy": "2.3.5",
-    "pandas": "3.0.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
     "statsmodels": "0.14.6"
   }
 }
