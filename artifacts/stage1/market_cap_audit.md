@@ -1,6 +1,6 @@
 # December 31, 2025 capitalization audit
 
-The current 30-stock endpoint snapshot replaces the earlier centrality-universe snapshot. It is used only for static Stage 1 value weights, not to choose the stocks. The selection uses the separate December 31, 2024 table.
+The endpoint snapshot covers the 30-stock universe. It is used only for static Stage 1 value weights, not to choose the stocks. The selection uses the separate December 31, 2024 table.
 
 For every endpoint row, the requested date is 2025-12-31, the vendor CIK matches the selected issuer, market_cap is positive, and raw market_cap equals the observed unadjusted close times weighted_shares_outstanding within floating-point tolerance. Sanitized raw ticker-overview responses are archived in ../input/year_end_sources/. Selected raw closes are in ../input/year_end_prices_2025.csv. No estimates replace these endpoint raw caps.
 

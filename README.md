@@ -134,6 +134,16 @@ Files use descriptive `snake_case` names. Each stage directory provides context;
 
 All paths in this table are relative to `artifacts/`. Stage 4 also saves `capm_summary.csv` using the same naming and units as Stage 2, with MSCI World as the market proxy.
 
+## Supplementary 2026 tracking
+
+The [2026 tracking study](research_2026/README.md) and [Ledoit–Wolf comparison](research_2026/ledoit_wolf/README.md) are included in this repository alongside their cached data. They support the report's Stage 4 discussion and remain separate from the four course stages.
+
+```bash
+python3 run_research_2026.py
+```
+
+This offline command refreshes Stage 1 weights, rebuilds the report's four tracking portfolios and runs ledger validation. It neither downloads data nor needs credentials. The endpoint remains October 6, 2026; official RF stops August 31. `--include-text` optionally adds the historical SVD-space text experiment, which is not used in the report. See [report links and reproduction notes](docs/report_reproduction.md).
+
 ## Reproduce
 
 From the repository root, install the dependencies and regenerate the completed stages:
@@ -151,7 +161,7 @@ python3 run_all.py --stage1
 python3 -m unittest discover -s tests -v
 ```
 
-The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice outputs; `--stage2` adds CAPM, SML and GRS. `--stage3` adds the FF3 factor analysis and automatically runs Stage 1 and Stage 2 first. Use `--all` to reproduce all four course stages from cached inputs; `--stage3 --stage4` remains equivalent. `--all` does not require local daily panels or run the separate research-branch experiments. `--stage4` adds the MSCI World market-proxy analysis and comparisons with Stage 2. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
+The default command rebuilds selection and classification-evidence figures. `--stage1` adds portfolio-choice outputs; `--stage2` adds CAPM, SML and GRS. `--stage3` adds the FF3 factor analysis and automatically runs Stage 1 and Stage 2 first. Use `--all` to reproduce all four course stages from cached inputs; `--stage3 --stage4` remains equivalent. `--all` does not require local daily panels or run the supplementary 2026 experiments. `--stage4` adds the MSCI World market-proxy analysis and comparisons with Stage 2. Outputs are overwritten with the results of the current run. Figures are saved to disk with a noninteractive backend. The existing unit-test suite covers research and Stage 1 components; Stage 2 also retains data and result diagnostics in its execution path.
 
 The pipeline runs offline from the versioned cached inputs. It does not refit upstream text models or recreate vendor daily panels. To rebuild monthly returns from local daily data before running both stages:
 
