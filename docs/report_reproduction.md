@@ -15,11 +15,11 @@ The first analysis command rebuilds the four course stages. The second independe
 ## Report locations affected by consolidation
 
 - Main report page 9: tracking and shrinkage evidence now also lives on main under `research_2026/`; original pinned links remain valid.
-- Appendix B, PDF page 12: keep the course command and add `python3 run_research_2026.py` for supplementary evidence. Replace “separate research-branch experiments” with “supplementary 2026 experiments, available through a separate entry point.”
-- Appendix G3, PDF page 22 in the revised v6 report: `research_2026/README.md` and `research_2026/ledoit_wolf/README.md` keep their relative paths and are now part of main. Add the supplementary entry point to the code index if revising the PDF.
+- Appendix B, PDF page 12: includes both the course command and `python3 run_research_2026.py`, with separate reproduction instructions for supplementary evidence.
+- Appendix G3, PDF page 22: `research_2026/README.md` and `research_2026/ledoit_wolf/README.md` keep their relative paths and are now part of main. The code index includes the supplementary entry point.
 - Fixed commit links can remain unchanged for reproducibility. Use main-relative links in repository Markdown for current navigation.
 
-The PDFs are authored documents and are not rewritten by either command. The repository PDF and separately supplied revised v6 PDF are different versions; consolidation does not overwrite either one or alter contribution signatures.
+The repository report, [`FE5108_Project_Report.pdf`](../FE5108_Project_Report.pdf), is the 22-page revised v7. Pages 12 and 22 document the supplementary reproduction entry point; all other pages, including contribution signatures, are unchanged from revised v6. The PDF is an authored document and is not rewritten by either command.
 
 ## Evidence scope
 
