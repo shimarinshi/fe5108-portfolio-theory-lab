@@ -19,7 +19,7 @@ The first analysis command rebuilds the four course stages. The second independe
 - Appendix G3, PDF page 22: `research_2026/README.md` and `research_2026/ledoit_wolf/README.md` keep their relative paths and are now part of main. The code index includes the supplementary entry point.
 - Fixed commit links can remain unchanged for reproducibility. Use main-relative links in repository Markdown for current navigation.
 
-The repository report, [`FE5108_Project_Report.pdf`](../FE5108_Project_Report.pdf), is the 22-page revised v7. Pages 12 and 22 document the supplementary reproduction entry point; all other pages, including contribution signatures, are unchanged from revised v6. The PDF is an authored document and is not rewritten by either command.
+The repository report, [`FE5108_Project_Report.pdf`](../FE5108_Project_Report.pdf), is the 23-page revised v8. Pages 12 and 22 document the supplementary reproduction entry point. Pages 2 and 12 clarify the Massive-derived daily-return inputs; Appendix H (page 23) summarizes data processing, monthly validation and code availability. All other pages, including contribution signatures, are unchanged from revised v7. The PDF is an authored document and is not rewritten by either command.
 
 ## Evidence scope
 
